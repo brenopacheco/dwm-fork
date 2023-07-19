@@ -3,3 +3,5 @@ dwm
 .cache/
 .ccls-cache/
 compile_commands.json
+dwm-msg
+
