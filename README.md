@@ -1,13 +1,21 @@
 # DWM 6.4 e81f17d fork
 
+format: see https://gitlab.com/SamDenton/dwm/-/blob/master/config.def.h
+
 ## Patches
-- [ ] [pertag](https://dwm.suckless.org/patches/pertag/)
-- [ ] [barpadding](https://dwm.suckless.org/patches/barpadding/)
-- [ ] [fullgaps](https://dwm.suckless.org/patches/fullgaps/)
-- [ ] [actualfullscreen](https://dwm.suckless.org/patches/actualfullscreen/)
-- [ ] [alwayscenter](https://dwm.suckless.org/patches/alwayscenter/)
-- [ ] [anybar](https://dwm.suckless.org/patches/anybar/)
-- [ ] [ipc](https://dwm.suckless.org/patches/ipc/)
+- [ ] [selfrestart](https://dwm.suckless.org/patches/selfrestart/dwm-r1615-selfrestart.diff)
+- [ ] [ewmhtags](https://dwm.suckless.org/patches/ewmhtags/dwm-ewmhtags-6.2.diff)
+- [ ] [pertag](https://dwm.suckless.org/patches/pertag/dwm-pertag-20200914-61bb8b2.diff)
+- [ ] [barpadding](https://dwm.suckless.org/patches/barpadding/dwm-barpadding-20211020-a786211.diff)
+- [ ] [fullgaps](https://dwm.suckless.org/patches/fullgaps/dwm-fullgaps-6.4.diff)
+- [ ] [actualfullscreen](https://dwm.suckless.org/patches/actualfullscreen/dwm-actualfullscreen-20211013-cb3f58a.diff)
+- [ ] [alwayscenter](https://dwm.suckless.org/patches/alwayscenter/dwm-alwayscenter-20200625-f04cac6.diff)
+- [ ] [anyabar](https://dwm.suckless.org/patches/anybar/dwm-anybar-20200810-bb2e722.diff)
+- [ ] [ipc](https://dwm.suckless.org/patches/ipc/dwm-ipc-20201106-f04cac6.diff)
+
+# Colors
+
+rose-pine: https://github.com/motolla/dwm-rose/blob/main/colors/rose-pine.h
 
 ## Polybar configuration
 
@@ -20,10 +28,6 @@ Communicates via IPC on socket /tmp/dwm.sock
 ## EWW configuration
 
 https://www.reddit.com/r/unixporn/comments/yai8jv/dwm_eww_i_love_them/
-
-## Picom configuration
-
-## Rofi configuration
 
 ## SXHKD configuration
 
@@ -72,3 +76,8 @@ mod + j/k:            increase/decrease window height
 mod + i:              increase master stack size
 mod + o:              decrease master stack size
 ```
+
+## Picom configuration
+
+## Rofi configuration
+

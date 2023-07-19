@@ -1,7 +1,21 @@
 # dwm - dynamic window manager
 # See LICENSE file for copyright and license details.
 
-include config.mk
+VERSION = 6.4
+
+PREFIX = /usr/local
+MANPREFIX = ${PREFIX}/share/man
+
+CFLAGS = -std=c99 -pedantic -Wall -Wno-deprecated-declarations -Os \
+         -D_DEFAULT_SOURCE \
+		 $(shell pkg-config --cflags freetype2) \
+		 $(shell pkg-config --cflags x11)
+LDFLAGS  = $(shell pkg-config --libs x11) \
+		   $(shell pkg-config --libs xinerama) \
+		   $(shell pkg-config --libs fontconfig) \
+		   $(shell pkg-config --libs xft)
+
+CC = cc
 
 SRC = drw.c dwm.c util.c
 OBJ = ${SRC:.c=.o}
@@ -17,11 +31,6 @@ options:
 .c.o:
 	${CC} -c ${CFLAGS} $<
 
-${OBJ}: config.h config.mk
-
-config.h:
-	cp config.def.h $@
-
 dwm: ${OBJ}
 	${CC} -o $@ ${OBJ} ${LDFLAGS}
 
@@ -30,7 +39,7 @@ clean:
 
 dist: clean
 	mkdir -p dwm-${VERSION}
-	cp -R LICENSE Makefile README config.def.h config.mk\
+	cp -R LICENSE Makefile README \
 		dwm.1 drw.h util.h ${SRC} dwm.png transient.c dwm-${VERSION}
 	tar -cf dwm-${VERSION}.tar dwm-${VERSION}
 	gzip dwm-${VERSION}.tar
@@ -48,4 +57,7 @@ uninstall:
 	rm -f ${DESTDIR}${PREFIX}/bin/dwm\
 		${DESTDIR}${MANPREFIX}/man1/dwm.1
 
-.PHONY: all options clean dist install uninstall
+commands:
+	bear -- make clean all
+
+.PHONY: all options clean dist install uninstall commands
