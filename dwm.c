@@ -168,6 +168,7 @@ static void focusin(XEvent *e);
 static void focusmon(const Arg *arg);
 static void focusstack(const Arg *arg);
 static Atom getatomprop(Client *c, Atom prop);
+static char *get_dwm_path(void);
 static int getrootptr(int *x, int *y);
 static long getstate(Window w);
 static int gettextprop(Window w, Atom atom, char *text, unsigned int size);
@@ -193,6 +194,7 @@ static void resizemouse(const Arg *arg);
 static void restack(Monitor *m);
 static void run(void);
 static void scan(void);
+static void self_restart(const Arg *arg);
 static int sendevent(Client *c, Atom proto);
 static void sendmon(Client *c, Monitor *m);
 static void setclientstate(Client *c, long state);
@@ -362,6 +364,7 @@ static const Key keys[] = {
 	TAGKEYS(                        XK_7,                      6)
 	TAGKEYS(                        XK_8,                      7)
 	TAGKEYS(                        XK_9,                      8)
+  { MODKEY|ShiftMask,             XK_r,      self_restart,   {0} },
 	{ MODKEY|ShiftMask,             XK_q,      quit,           {0} },
 };
 
@@ -980,6 +983,44 @@ getatomprop(Client *c, Atom prop)
 	return atom;
 }
 
+char*
+get_dwm_path(void)
+{
+    struct stat s;
+    int r, length, rate = 42;
+    char *path = NULL;
+
+    if(lstat("/proc/self/exe", &s) == -1){
+        perror("lstat:");
+        return NULL;
+    }
+
+    length = s.st_size + 1 - rate;
+
+    do{
+        length+=rate;
+
+        free(path);
+        path = malloc(sizeof(char) * length);
+
+        if(path == NULL){
+            perror("malloc:");
+            return NULL;
+        }
+
+        r = readlink("/proc/self/exe", path, length);
+
+        if(r == -1){
+            perror("readlink:");
+            return NULL;
+        }
+    }while(r >= length);
+
+    path[r] = '\0';
+
+    return path;
+}
+
 int
 getrootptr(int *x, int *y)
 {
@@ -1543,6 +1584,18 @@ setclientstate(Client *c, long state)
 
 	XChangeProperty(dpy, c->win, wmatom[WMState], wmatom[WMState], 32,
 		PropModeReplace, (unsigned char *)data, 2);
+}
+
+void
+self_restart(const Arg *arg)
+{
+    char *const argv[] = {get_dwm_path(), NULL};
+
+    if(argv[0] == NULL){
+        return;
+    }
+
+    execv(argv[0], argv);
 }
 
 int
