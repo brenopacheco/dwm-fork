@@ -17,7 +17,7 @@ format: see https://gitlab.com/SamDenton/dwm/-/blob/master/config.def.h
 - [x] [alwayscenter](https://dwm.suckless.org/patches/alwayscenter/dwm-alwayscenter-20200625-f04cac6.diff)
 - [x] [anyabar](https://dwm.suckless.org/patches/anybar/dwm-anybar-20200810-bb2e722.diff)
 - [x] [ipc](https://dwm.suckless.org/patches/ipc/dwm-ipc-20201106-f04cac6.diff)
-- [ ] [rose-pine](https://github.com/motolla/dwm-rose/blob/main/colors/rose-pine.h)
+- [x] [rose-pine](https://raw.githubusercontent.com/motolla/dwm-rose/main/colors/rose-pine.h)
 
 ## Polybar configuration
 
@@ -35,48 +35,42 @@ https://www.reddit.com/r/unixporn/comments/yai8jv/dwm_eww_i_love_them/
 
 Communicates via IPC on socket /tmp/dwm.sock
 
-- [ ] modes:
 ```
-mod + u:            toggle floating mode
-mod + t:            toggle tiling mode (*new)
-mod + m:            toggle monocle mode
-mod + f:            toggle window floating 
-```
+mod         + q            kill window
+mod + shift + q            quit dwm
+mod + shift + r            restart dwm
 
-- [ ] navigation:
-```
-mod + {1-9}:        switch to tag/tab {1-9}
-mod + tab:          focus other monitor
-mod + n/p:          focus next/prev window in tag/tab
-```
+mod         + t            toggle tiling mode
+mod         + f            toggle floating mode
+mod         + m            toggle monocle mode
+mod         + spc          toggle window float
+mod         + 0            toggle window full screen
 
-- [ ] moving windows / layout:
-```
-mod + shift + {1-9}:  move window to tag/tab
-mod + shift + tab:    move window to other monitor
-mod + right button:   move window (make it float)
-mod + left button:    resize window
-mod + backspace:      swap master
-mod + q:              kill/close window
-mod + b:              toggle bars
-```
+mod         + n            focus next window
+mod         + p            focus previous window
+mod         + tab          focus other monitor
 
-- [ ] applications:
-```
-mod + enter:          terminal
-mod + shift + q:      quit window manager (close session)
-mod + ':              run launcher (wofi/rofi)
-mod + s:              run password manager (passmenu)
-mod + w:              open browser (maybe remove and customize rofi)
-```
+mod         + i            increase master stack size
+mod         + o            decrease master stack size
+mod         + h            increase master width
+mod         + l            decrease master width
 
-+ misc (not necessary)
-```
-mod + shift + n/p:    move window up/down the stack
-mod + h/l:            increase/decrease master width
-mod + j/k:            increase/decrease window height
-mod + i:              increase master stack size
-mod + o:              decrease master stack size
+mod         + bsp          swap master
+mod         + {1-9}        switch to tag {1-9}
+mod + shift + {1-9}        move window to tag {1-9}
+mod + ctrl  + {1-9}        toggle tag {1-9}
+
+mod         + ret          launch terminal
+mod         + '            run launcher (wofi/rofi)
+mod         + s            run password manager (passmenu)
+mod         + w            open browser (maybe remove and customize rofi)
+mod         + e            open   tmux session
+mod         + a            attach tmux session
+
+available keys:
+
+- mod+{r,d}
+- mod+shift+{w,e,t,a,s,d,f,i,o,p,h,j,k,l,n,m,b}
 ```
 
 ## Picom configuration
