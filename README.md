@@ -1,14 +1,16 @@
 # DWM 6.4 e81f17d fork
 
-TODO:
-- remove the bar altogether, including font, draw funs, spawn fn, etc.
-- remove keymap logic after SXHKD is configured (keep quit so we don't get stuck)
+1. TODO: when bar is visible, but polybar is not present, an additional gap is
+added. remove this gap
 
+2. only launch polybar if it has not yet launched
+3. launch sxhkd if it has not yet launched
+4. remove all keypress handling code
 
-format: see https://gitlab.com/SamDenton/dwm/-/blob/master/config.def.h
 
 ## Patches
-- [x] [selfrestart](https://dwm.suckless.org/patches/selfrestart/dwm-r1615-selfrestart.diff)
+- [-] [selfrestart](https://dwm.suckless.org/patches/selfrestart/dwm-r1615-selfrestart.diff)
+- [x] [restartsig](https://dwm.suckless.org/patches/restartsig/dwm-restartsig-20180523-6.2.diff)
 - [x] [ewmhtags](https://dwm.suckless.org/patches/ewmhtags/dwm-ewmhtags-6.2.diff)
 - [x] [pertag](https://dwm.suckless.org/patches/pertag/dwm-pertag-20200914-61bb8b2.diff)
 - [x] [barpadding](https://dwm.suckless.org/patches/barpadding/dwm-barpadding-20211020-a786211.diff)
@@ -54,8 +56,10 @@ mod         + i            increase master stack size
 mod         + o            decrease master stack size
 mod         + h            increase master width
 mod         + l            decrease master width
+mod         + b            toggle top bar
 
 mod         + bsp          swap master
+mod + shift + tab          move window to next monitor
 mod         + {1-9}        switch to tag {1-9}
 mod + shift + {1-9}        move window to tag {1-9}
 mod + ctrl  + {1-9}        toggle tag {1-9}

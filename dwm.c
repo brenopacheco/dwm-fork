@@ -59,12 +59,7 @@
 
 /* enums */
 enum { CurNormal, CurResize, CurMove, CurLast }; /* cursor */
-enum { SchemeNorm, SchemeSel,
-  SchemeTag, SchemeTag1, SchemeTag2, SchemeTag3,
-  SchemeTag4, SchemeTag5, SchemeTag6, SchemeLayout,
-  SchemeTitle, SchemeTitleFloat,
-  SchemeTitle1, SchemeTitle2, SchemeTitle3,
-  SchemeTitle4, SchemeTitle5, SchemeTitle6 }; /* color schemes */
+enum { SchemeNorm, SchemeSel };/* color schemes */
 enum { NetSupported, NetWMName, NetWMState, NetWMCheck,
        NetWMFullscreen, NetActiveWindow, NetWMWindowType,
        NetWMWindowTypeDialog, NetClientList, NetDesktopNames, NetDesktopViewport, NetNumberOfDesktops, NetCurrentDesktop, NetLast }; /* EWMH atoms */
@@ -195,7 +190,6 @@ static void focusin(XEvent *e);
 static void focusmon(const Arg *arg);
 static void focusstack(const Arg *arg);
 static Atom getatomprop(Client *c, Atom prop);
-static char *get_dwm_path(void);
 static int getrootptr(int *x, int *y);
 static long getstate(Window w);
 static int gettextprop(Window w, Atom atom, char *text, unsigned int size);
@@ -223,7 +217,6 @@ static void resizemouse(const Arg *arg);
 static void restack(Monitor *m);
 static void run(void);
 static void scan(void);
-static void self_restart(const Arg *arg);
 static int sendevent(Client *c, Atom proto);
 static void sendmon(Client *c, Monitor *m);
 static void setclientstate(Client *c, long state);
@@ -233,6 +226,7 @@ static void setfocus(Client *c);
 static void setfullscreen(Client *c, int fullscreen);
 static void setlayout(const Arg *arg);
 static void setlayoutsafe(const Arg *arg);
+static void setlayoutnr(const Arg *arg);
 static void setmfact(const Arg *arg);
 static void setnumdesktops(void);
 static void setup(void);
@@ -240,6 +234,8 @@ static void setupepoll(void);
 static void setviewport(void);
 static void seturgent(Client *c, int urg);
 static void showhide(Client *c);
+static void sighup(int unused);
+static void sigterm(int unused);
 static void spawn(const Arg *arg);
 static void spawnbar(void);
 static void tag(const Arg *arg);
@@ -302,6 +298,7 @@ static void (*handler[LASTEvent]) (XEvent *) = {
 	[UnmapNotify] = unmapnotify
 };
 static Atom wmatom[WMLast], netatom[NetLast];
+static int restart = 0;
 static int epoll_fd;
 static int dpy_fd;
 static int running = 1;
@@ -321,50 +318,27 @@ static Window root, wmcheckwin;
 /* CONFIG START ******************************************************* {{{ */
 
 /* appearance */
-static const unsigned int borderpx  = 2;        /* border pixel of windows */
-static const unsigned int gappx     = 10;       /* gaps between windows */
-static const unsigned int snap      = 32;       /* snap pixel */
-static const int showbar            = 1;        /* 0 means no bar */
-static const int topbar             = 1;        /* 0 means bottom bar */
-static const int usealtbar          = 1;        /* 1 means use non-dwm status bar */
+static const unsigned int borderpx  = 2;         /* border pixel of windows */
+static const unsigned int gappx     = 10;        /* gaps between windows */
+static const unsigned int snap      = 32;        /* snap pixel */
+static const int showbar            = 1;         /* 0 means no bar */
+static const int topbar             = 1;         /* 0 means bottom bar */
+static const int usealtbar          = 0;         /* 1 means use non-dwm status bar */
 static const char *altbarclass      = "Polybar"; /* Alternate bar class name */
-static const char *altbarcmd        = "$HOME/bar.sh"; /* Alternate bar launch command */
-static const int vertpad            = 10;       /* vertical padding of bar */
-static const int sidepad            = 10;       /* horizontal padding of bar */
+static const int vertpad            = 10;        /* vertical padding of bar */
+static const int sidepad            = 10;        /* horizontal padding of bar */
 static const char *fonts[]          = { "monospace:size=10" };
 
 static const char bg0[]      = "#191724";
 static const char bg1[]      = "#1f1d2e";
-// static const char bg2[]      = "#26233a";
-static const char fg0[]      = "#e0def4";
 static const char fg1[]      = "#6e6a86";
-static const char fg2[]      = "#908caa";
 static const char red[]      = "#eb6f92";
-static const char yellow[]   = "#f6c177";
 static const char rose[]     = "#ebbcba";
-static const char bluu[]     = "#31748f";
-static const char cyan[]     = "#9ccfd8";
-static const char purple[]   = "#c4a7e7";
 
 static const char *colors[][3]  = {
   /*                     fg      bg    border */
-  [SchemeNorm]       = { fg1,    bg0,  fg2 },
-  [SchemeSel]        = { bg1,    rose, rose },
-  [SchemeTag]        = { bg0,    bg1,  bg0 },
-  [SchemeTag1]       = { rose,   bg0,  bg1 },
-  [SchemeTag2]       = { red,    bg0,  bg1 },
-  [SchemeTag3]       = { yellow, bg0,  bg1 },
-  [SchemeTag4]       = { bluu,   bg0,  bg1 },
-  [SchemeTag5]       = { purple, bg0,  bg1 },
-  [SchemeTag6]       = { cyan,   bg0,  bg1 },
-  [SchemeLayout]     = { rose,   bg0,  bg1 },
-  [SchemeTitle]      = { fg0,    bg0,  bg1 },
-  [SchemeTitle1]     = { rose,   bg0,  bg1 },
-  [SchemeTitle2]     = { red,    bg0,  bg1 },
-  [SchemeTitle3]     = { yellow, bg0,  bg1 },
-  [SchemeTitle4]     = { bluu,   bg0,  bg1 },
-  [SchemeTitle5]     = { purple, bg0,  bg1 },
-  [SchemeTitle6]     = { cyan,   bg0,  bg1 },
+  [SchemeNorm]       = { fg1,    bg0,  bg0 },
+  [SchemeSel]        = { bg1,    rose, red },
 };
 
 /* tagging */
@@ -401,48 +375,14 @@ static const Layout layouts[] = {
 	{ MODKEY|ShiftMask,             KEY,      tag,            {.ui = 1 << TAG} }, \
 	{ MODKEY|ControlMask|ShiftMask, KEY,      toggletag,      {.ui = 1 << TAG} },
 
-/* helper for spawning shell commands in the pre dwm-5.0 fashion */
-#define SHCMD(cmd) { .v = (const char*[]){ "/bin/sh", "-c", cmd, NULL } }
-
 /* commands */
-static const char *termcmd[]  = { "st", NULL };
+// static const char *sxhkd[]    = { "sxhkd",   NULL };
+static const char *polybar[]  = { "polybar", NULL };
 
 static const Key keys[] = {
 	/* modifier         key            function        argument */
-	{ MODKEY,           XK_Return,     spawn,          {.v = termcmd } },
-	{ MODKEY,           XK_q,          killclient,     {0} },
-  { MODKEY|ShiftMask, XK_r,          self_restart,   {0} },
-	{ MODKEY|ShiftMask, XK_q,          quit,           {0} },
-
-	{ MODKEY,           XK_t,          setlayout,      {.v = &layouts[0]} },
-	{ MODKEY,           XK_f,          setlayout,      {.v = &layouts[1]} },
-	{ MODKEY,           XK_m,          setlayout,      {.v = &layouts[2]} },
-	{ MODKEY,           XK_space,      togglefloating, {0} },
-	{ MODKEY,           XK_0,          togglefullscr,  {0} },
-
-	{ MODKEY,           XK_n,          focusstack,     {.i = +1 } },
-	{ MODKEY,           XK_p,          focusstack,     {.i = -1 } },
-	{ MODKEY,           XK_BackSpace,  zoom,           {0} },
-  { MODKEY,           XK_Tab,        focusmon,       {.i = +1}},
-
-  // TAGKEYS do shift + num -> move window to tag
-	{ MODKEY|ShiftMask, XK_Tab,        tagmon,         {.i = +1}},
-
-	{ MODKEY,           XK_b,          togglebar,      {0} },
-	{ MODKEY,           XK_i,          incnmaster,     {.i = +1 } },
-	{ MODKEY,           XK_o,          incnmaster,     {.i = -1 } },
-	{ MODKEY,           XK_h,          setmfact,       {.f = -0.05} },
-	{ MODKEY,           XK_l,          setmfact,       {.f = +0.05} },
-
-	TAGKEYS(XK_1, 0)
-	TAGKEYS(XK_2, 1)
-	TAGKEYS(XK_3, 2)
-	TAGKEYS(XK_4, 3)
-	TAGKEYS(XK_5, 4)
-	TAGKEYS(XK_6, 5)
-	TAGKEYS(XK_7, 6)
-	TAGKEYS(XK_8, 7)
-	TAGKEYS(XK_9, 8)
+	{ MODKEY,           XK_x,          quit,           {0} },
+	{ MODKEY|ShiftMask, XK_x,          quit,           {1} },
 };
 
 static const Button buttons[] = {
@@ -455,6 +395,7 @@ static const char *ipcsockpath = "/tmp/dwm.sock";
 static IPCCommand ipccommands[] = {
   IPCCOMMAND(  view,                1,      {ARG_TYPE_UINT}   ),
   IPCCOMMAND(  toggleview,          1,      {ARG_TYPE_UINT}   ),
+  IPCCOMMAND(  togglebar,           1,      {ARG_TYPE_NONE}   ),
   IPCCOMMAND(  tag,                 1,      {ARG_TYPE_UINT}   ),
   IPCCOMMAND(  toggletag,           1,      {ARG_TYPE_UINT}   ),
   IPCCOMMAND(  tagmon,              1,      {ARG_TYPE_UINT}   ),
@@ -464,9 +405,11 @@ static IPCCommand ipccommands[] = {
   IPCCOMMAND(  incnmaster,          1,      {ARG_TYPE_SINT}   ),
   IPCCOMMAND(  killclient,          1,      {ARG_TYPE_SINT}   ),
   IPCCOMMAND(  togglefloating,      1,      {ARG_TYPE_NONE}   ),
+  IPCCOMMAND(  togglefullscr,       1,      {ARG_TYPE_NONE}   ),
   IPCCOMMAND(  setmfact,            1,      {ARG_TYPE_FLOAT}  ),
   IPCCOMMAND(  setlayoutsafe,       1,      {ARG_TYPE_PTR}    ),
-  IPCCOMMAND(  quit,                1,      {ARG_TYPE_NONE}   )
+  IPCCOMMAND(  setlayoutnr,         1,      {ARG_TYPE_UINT}   ),
+  IPCCOMMAND(  quit,                1,      {ARG_TYPE_SINT}   )
 };
 
 /* CONFIG END ********************************************************* }}} */
@@ -1117,44 +1060,6 @@ getatomprop(Client *c, Atom prop)
 	return atom;
 }
 
-char*
-get_dwm_path(void)
-{
-    struct stat s;
-    int r, length, rate = 42;
-    char *path = NULL;
-
-    if(lstat("/proc/self/exe", &s) == -1){
-        perror("lstat:");
-        return NULL;
-    }
-
-    length = s.st_size + 1 - rate;
-
-    do{
-        length+=rate;
-
-        free(path);
-        path = malloc(sizeof(char) * length);
-
-        if(path == NULL){
-            perror("malloc:");
-            return NULL;
-        }
-
-        r = readlink("/proc/self/exe", path, length);
-
-        if(r == -1){
-            perror("readlink:");
-            return NULL;
-        }
-    }while(r >= length);
-
-    path[r] = '\0';
-
-    return path;
-}
-
 int
 getrootptr(int *x, int *y)
 {
@@ -1578,6 +1483,7 @@ propertynotify(XEvent *e)
 void
 quit(const Arg *arg)
 {
+	if(arg->i) restart = 1;
 	running = 0;
 }
 
@@ -1802,18 +1708,6 @@ setclientstate(Client *c, long state)
 		PropModeReplace, (unsigned char *)data, 2);
 }
 
-void
-self_restart(const Arg *arg)
-{
-    char *const argv[] = {get_dwm_path(), NULL};
-
-    if(argv[0] == NULL){
-        return;
-    }
-
-    execv(argv[0], argv);
-}
-
 int
 sendevent(Client *c, Atom proto)
 {
@@ -1911,6 +1805,15 @@ setlayoutsafe(const Arg *arg)
 	}
 }
 
+void
+setlayoutnr(const Arg *arg)
+{
+	if (arg->i < 0 || arg->i >= LENGTH(layouts))
+		return;
+	Arg a = {.v = &layouts[arg->i]};
+	setlayout(&a);
+}
+
 /* arg > 1.0 will set mfact absolutely */
 void
 setmfact(const Arg *arg)
@@ -1942,6 +1845,9 @@ setup(void)
 
 	/* clean up any zombies (inherited from .xinitrc etc) immediately */
 	while (waitpid(-1, NULL, WNOHANG) > 0);
+
+	signal(SIGHUP, sighup);
+	signal(SIGTERM, sigterm);
 
 	/* init screen */
 	screen = DefaultScreen(dpy);
@@ -2082,6 +1988,20 @@ showhide(Client *c)
 }
 
 void
+sighup(int unused)
+{
+	Arg a = {.i = 1};
+	quit(&a);
+}
+
+void
+sigterm(int unused)
+{
+	Arg a = {.i = 0};
+	quit(&a);
+}
+
+void
 spawn(const Arg *arg)
 {
 	struct sigaction sa;
@@ -2104,8 +2024,10 @@ spawn(const Arg *arg)
 void
 spawnbar(void)
 {
-	if (*altbarcmd)
-		system(altbarcmd);
+	if (usealtbar) {
+		Arg arg = {.v = polybar };
+		spawn(&arg);
+	}
 }
 
 void
@@ -2720,6 +2642,7 @@ main(int argc, char *argv[])
 #endif /* __OpenBSD__ */
 	scan();
 	run();
+	if(restart) execvp(argv[0], argv);
 	cleanup();
 	XCloseDisplay(dpy);
 	return EXIT_SUCCESS;

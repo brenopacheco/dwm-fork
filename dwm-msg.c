@@ -182,7 +182,7 @@ write_socket(const void *buf, size_t count)
 }
 
 static void
-connect_to_socket()
+connect_to_socket(void)
 {
   struct sockaddr_un addr;
 
@@ -194,7 +194,11 @@ connect_to_socket()
   addr.sun_family = AF_UNIX;
   strcpy(addr.sun_path, DEFAULT_SOCKET_PATH);
 
-  connect(sock, (const struct sockaddr *)&addr, sizeof(struct sockaddr_un));
+  int err = connect(sock, (const struct sockaddr *)&addr, sizeof(struct sockaddr_un));
+	if (err == -1) {
+		fprintf(stderr, "Error connecting to socket. Is dwm running?\n");
+		exit(1);
+	}
 
   sock_fd = sock;
 }
@@ -280,7 +284,7 @@ is_signed_int(const char *s)
 }
 
 static void
-flush_socket_reply()
+flush_socket_reply(void)
 {
   IPCMessageType reply_type;
   uint32_t reply_size;
@@ -292,7 +296,7 @@ flush_socket_reply()
 }
 
 static void
-print_socket_reply()
+print_socket_reply(void)
 {
   IPCMessageType reply_type;
   uint32_t reply_size;
@@ -352,7 +356,7 @@ run_command(const char *name, char *args[], int argc)
 }
 
 static int
-get_monitors()
+get_monitors(void)
 {
   send_message(IPC_TYPE_GET_MONITORS, 1, (uint8_t *)"");
   print_socket_reply();
@@ -360,7 +364,7 @@ get_monitors()
 }
 
 static int
-get_tags()
+get_tags(void)
 {
   send_message(IPC_TYPE_GET_TAGS, 1, (uint8_t *)"");
   print_socket_reply();
@@ -369,7 +373,7 @@ get_tags()
 }
 
 static int
-get_layouts()
+get_layouts(void)
 {
   send_message(IPC_TYPE_GET_LAYOUTS, 1, (uint8_t *)"");
   print_socket_reply();
