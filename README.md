@@ -1,5 +1,10 @@
 # DWM 6.4 e81f17d fork
 
+TODO:
+- remove the bar altogether, including font, draw funs, spawn fn, etc.
+- remove keymap logic after SXHKD is configured (keep quit so we don't get stuck)
+
+
 format: see https://gitlab.com/SamDenton/dwm/-/blob/master/config.def.h
 
 ## Patches
@@ -10,12 +15,9 @@ format: see https://gitlab.com/SamDenton/dwm/-/blob/master/config.def.h
 - [x] [fullgaps](https://dwm.suckless.org/patches/fullgaps/dwm-fullgaps-6.4.diff)
 - [x] [actualfullscreen](https://dwm.suckless.org/patches/actualfullscreen/dwm-actualfullscreen-20211013-cb3f58a.diff)
 - [x] [alwayscenter](https://dwm.suckless.org/patches/alwayscenter/dwm-alwayscenter-20200625-f04cac6.diff)
-- [ ] [anyabar](https://dwm.suckless.org/patches/anybar/dwm-anybar-20200810-bb2e722.diff)
+- [x] [anyabar](https://dwm.suckless.org/patches/anybar/dwm-anybar-20200810-bb2e722.diff)
 - [x] [ipc](https://dwm.suckless.org/patches/ipc/dwm-ipc-20201106-f04cac6.diff)
-
-# Colors
-
-rose-pine: https://github.com/motolla/dwm-rose/blob/main/colors/rose-pine.h
+- [ ] [rose-pine](https://github.com/motolla/dwm-rose/blob/main/colors/rose-pine.h)
 
 ## Polybar configuration
 
