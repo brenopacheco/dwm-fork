@@ -1,0 +1,268 @@
+[
+  {
+    "$ref": "#/definitions/tag_change_event",
+    "definitions": {
+      "tag_change_event": {
+        "type": "object",
+        "properties": {
+          "monitor_number": {
+            "type": "number"
+          },
+          "old_state": {
+            "type": "object",
+            "properties": {
+              "selected": {
+                "type": "number"
+              },
+              "occupied": {
+                "type": "number"
+              },
+              "urgent": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "selected",
+              "occupied",
+              "urgent"
+            ],
+            "additionalProperties": false
+          },
+          "new_state": {
+            "type": "object",
+            "properties": {
+              "selected": {
+                "type": "number"
+              },
+              "occupied": {
+                "type": "number"
+              },
+              "urgent": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "selected",
+              "occupied",
+              "urgent"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "monitor_number",
+          "old_state",
+          "new_state"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "$schema": "http://json-schema.org/draft-07/schema#"
+  },
+  {
+    "$ref": "#/definitions/client_focus_change_event",
+    "definitions": {
+      "client_focus_change_event": {
+        "type": "object",
+        "properties": {
+          "monitor_number": {
+            "type": "number"
+          },
+          "old_win_id": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "new_win_id": {
+            "type": [
+              "number",
+              "null"
+            ]
+          }
+        },
+        "required": [
+          "monitor_number",
+          "old_win_id",
+          "new_win_id"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "$schema": "http://json-schema.org/draft-07/schema#"
+  },
+  {
+    "$ref": "#/definitions/layout_change_event",
+    "definitions": {
+      "layout_change_event": {
+        "type": "object",
+        "properties": {
+          "monitor_number": {
+            "type": "number"
+          },
+          "old_symbol": {
+            "type": "string"
+          },
+          "old_address": {
+            "type": "number"
+          },
+          "new_symbol": {
+            "type": "string"
+          },
+          "new_address": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "monitor_number",
+          "old_symbol",
+          "old_address",
+          "new_symbol",
+          "new_address"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "$schema": "http://json-schema.org/draft-07/schema#"
+  },
+  {
+    "$ref": "#/definitions/monitor_focus_change_event",
+    "definitions": {
+      "monitor_focus_change_event": {
+        "type": "object",
+        "properties": {
+          "old_monitor_number": {
+            "type": "number"
+          },
+          "new_monitor_number": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "old_monitor_number",
+          "new_monitor_number"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "$schema": "http://json-schema.org/draft-07/schema#"
+  },
+  {
+    "$ref": "#/definitions/focused_title_change_event",
+    "definitions": {
+      "focused_title_change_event": {
+        "type": "object",
+        "properties": {
+          "monitor_number": {
+            "type": "number"
+          },
+          "client_window_id": {
+            "type": "number"
+          },
+          "old_name": {
+            "type": "string"
+          },
+          "new_name": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "monitor_number",
+          "client_window_id",
+          "old_name",
+          "new_name"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "$schema": "http://json-schema.org/draft-07/schema#"
+  },
+  {
+    "$ref": "#/definitions/focused_state_change_event",
+    "definitions": {
+      "focused_state_change_event": {
+        "type": "object",
+        "properties": {
+          "monitor_number": {
+            "type": "number"
+          },
+          "client_window_id": {
+            "type": "number"
+          },
+          "old_state": {
+            "type": "object",
+            "properties": {
+              "old_state": {
+                "type": "boolean"
+              },
+              "is_fixed": {
+                "type": "boolean"
+              },
+              "is_floating": {
+                "type": "boolean"
+              },
+              "is_fullscreen": {
+                "type": "boolean"
+              },
+              "is_urgent": {
+                "type": "boolean"
+              },
+              "never_focus": {
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "old_state",
+              "is_fixed",
+              "is_floating",
+              "is_fullscreen",
+              "is_urgent",
+              "never_focus"
+            ],
+            "additionalProperties": false
+          },
+          "new_state": {
+            "type": "object",
+            "properties": {
+              "old_state": {
+                "type": "boolean"
+              },
+              "is_fixed": {
+                "type": "boolean"
+              },
+              "is_floating": {
+                "type": "boolean"
+              },
+              "is_fullscreen": {
+                "type": "boolean"
+              },
+              "is_urgent": {
+                "type": "boolean"
+              },
+              "never_focus": {
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "old_state",
+              "is_fixed",
+              "is_floating",
+              "is_fullscreen",
+              "is_urgent",
+              "never_focus"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "monitor_number",
+          "client_window_id",
+          "old_state",
+          "new_state"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "$schema": "http://json-schema.org/draft-07/schema#"
+  }
+]

@@ -323,22 +323,29 @@ static const unsigned int gappx     = 10;        /* gaps between windows */
 static const unsigned int snap      = 32;        /* snap pixel */
 static const int showbar            = 1;         /* 0 means no bar */
 static const int topbar             = 1;         /* 0 means bottom bar */
+static const int sxhkdRun           = 1;         /* launch sxhkd */
 static const int usealtbar          = 0;         /* 1 means use non-dwm status bar */
 static const char *altbarclass      = "Polybar"; /* Alternate bar class name */
 static const int vertpad            = 10;        /* vertical padding of bar */
 static const int sidepad            = 10;        /* horizontal padding of bar */
-static const char *fonts[]          = { "monospace:size=10" };
+static const int user_bh            = 28;        /* 0 means that dwm will calculate bar height, >= 1 means dwm will user_bh as bar height */
+static const char *fonts[]          = { "FiraCode Nerd Font:size=11:style=regular" };
 
-static const char bg0[]      = "#191724";
-static const char bg1[]      = "#1f1d2e";
-static const char fg1[]      = "#6e6a86";
-static const char red[]      = "#eb6f92";
-static const char rose[]     = "#ebbcba";
+// static const char foam[]       = "#9ccfd8";
+// static const char love[]       = "#eb6f92";
+// static const char text[]       = "#e0def4";
+
+static const char normBG[]     = "#1f1d2e";
+static const char normFG[]     = "#9ccfd8";
+static const char normBorder[] = "#191724";
+static const char selBG[]      = "#1f1d2e";
+static const char selFG[]      = "#eb6f92";
+static const char selBorder[]  = "#e0def4";
 
 static const char *colors[][3]  = {
-  /*                     fg      bg    border */
-  [SchemeNorm]       = { fg1,    bg0,  bg0 },
-  [SchemeSel]        = { bg1,    rose, red },
+  /*                       fg      bg      border */
+	[SchemeNorm]       =   { normFG, normBG, normBorder },
+	[SchemeSel]        =   { selFG,  selBG,  selBorder },
 };
 
 /* tagging */
@@ -376,7 +383,7 @@ static const Layout layouts[] = {
 	{ MODKEY|ControlMask|ShiftMask, KEY,      toggletag,      {.ui = 1 << TAG} },
 
 /* commands */
-// static const char *sxhkd[]    = { "sxhkd",   NULL };
+static const char *sxhkd[]    = { "sxhkd",   NULL };
 static const char *polybar[]  = { "polybar", NULL };
 
 static const Key keys[] = {
@@ -1858,7 +1865,7 @@ setup(void)
 	if (!drw_fontset_create(drw, fonts, LENGTH(fonts)))
 		die("no fonts could be loaded.");
 	lrpad = drw->fonts->h;
-	bh = usealtbar ? 0 : drw->fonts->h + 2;
+	bh = user_bh ? user_bh : drw->fonts->h + 2;
 	sp = sidepad;
 	vp = (topbar == 1) ? vertpad : - vertpad;
 	updategeom();
@@ -2026,6 +2033,15 @@ spawnbar(void)
 {
 	if (usealtbar) {
 		Arg arg = {.v = polybar };
+		spawn(&arg);
+	}
+}
+
+void
+spawnsxhkd(void)
+{
+	if (sxhkdRun) {
+		Arg arg = {.v = sxhkd };
 		spawn(&arg);
 	}
 }
