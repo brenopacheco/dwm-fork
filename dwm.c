@@ -385,6 +385,7 @@ static const Layout layouts[] = {
 /* commands */
 static const char *sxhkd[]    = { "sxhkd",   NULL };
 static const char *polybar[]  = { "polybar", NULL };
+static const char *termcmd[]  = { "st",      NULL };
 
 static const Key keys[] = {
 	/* modifier         key            function        argument */
@@ -393,9 +394,13 @@ static const Key keys[] = {
 };
 
 static const Button buttons[] = {
-	{ ClkClientWin,         MODKEY,         Button1,        movemouse,      {0} },
-	{ ClkClientWin,         MODKEY,         Button2,        togglefloating, {0} },
-	{ ClkClientWin,         MODKEY,         Button3,        resizemouse,    {0} },
+	{ ClkClientWin,     MODKEY,    Button1,    movemouse,        {0} },
+	{ ClkClientWin,     MODKEY,    Button2,    togglefloating,   {0} },
+	{ ClkClientWin,     MODKEY,    Button3,    resizemouse,      {0} },
+  { ClkStatusText,    0,         Button3,    spawn,            {.v = termcmd}},
+	{ ClkTagBar,        0,         Button1,    view,             {0}},
+	{ ClkTagBar,        0,         Button3,    toggleview,       {0}},
+  { ClkLtSymbol,      0,         Button1,    setlayout,        {0}},
 };
 
 static const char *ipcsockpath = "/tmp/dwm.sock";
