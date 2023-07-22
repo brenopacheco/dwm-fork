@@ -39,6 +39,9 @@
 #include <X11/Xutil.h>
 #include <X11/extensions/Xinerama.h>
 #include <X11/Xft/Xft.h>
+#include <time.h>
+#include <stdbool.h>
+#include <dirent.h>
 
 #include "drw.h"
 #include "util.h"
@@ -200,6 +203,7 @@ static int handlexevent(struct epoll_event *ev);
 static void incnmaster(const Arg *arg);
 static void keypress(XEvent *e);
 static void killclient(const Arg *arg);
+static void dlog(const char* format, ...);
 static void manage(Window w, XWindowAttributes *wa);
 static void managealtbar(Window win, XWindowAttributes *wa);
 static void mappingnotify(XEvent *e);
@@ -209,6 +213,7 @@ static void motionnotify(XEvent *e);
 static void movemouse(const Arg *arg);
 static Client *nexttiled(Client *c);
 static void pop(Client *c);
+static bool processrunning(const char *name);
 static void propertynotify(XEvent *e);
 static void quit(const Arg *arg);
 static Monitor *recttomon(int x, int y, int w, int h);
@@ -392,7 +397,7 @@ static const char *monocles[] = { "󰼏", "󰼐", "󰼑", "󰼒", "󰼓", "󰼔"
 #define SXHKD_FIFO "/tmp/sxhkd.fifo"
 
 /* commands */
-static const char *sxhkd[]    = { "sxhkd", "-s", SXHKD_FIFO, NULL };
+static const char *sxhkd[]    = { "sxhkd", "-d", "10", "-s", SXHKD_FIFO, NULL };
 static const char *polybar[]  = { "polybar", NULL };
 static const char *termcmd[]  = { "st",      NULL };
 
@@ -431,7 +436,7 @@ static IPCCommand ipccommands[] = {
   IPCCOMMAND(  setmfact,            1,      {ARG_TYPE_FLOAT}  ),
   IPCCOMMAND(  setlayoutsafe,       1,      {ARG_TYPE_PTR}    ),
   IPCCOMMAND(  setlayoutnr,         1,      {ARG_TYPE_UINT}   ),
-  IPCCOMMAND(  quit,                1,      {ARG_TYPE_SINT}   )
+  IPCCOMMAND(  quit,                1,      {ARG_TYPE_SINT}   ),
 };
 
 /* CONFIG END ********************************************************* }}} */
@@ -1257,6 +1262,29 @@ killclient(const Arg *arg)
 }
 
 void
+dlog(const char* format, ...)
+{
+	FILE* logFile = fopen("/tmp/dwm.log", "a");
+	if (logFile == NULL) {
+		fprintf(stderr, "Failed to open log file\n");
+	    return;
+	}
+	time_t currentTime = time(NULL);
+	struct tm* timeInfo = localtime(&currentTime);
+	char timeString[30];
+	strftime(timeString, sizeof(timeString), "%Y-%m-%d %H:%M:%S", timeInfo);
+	
+	va_list args;
+	va_start(args, format);
+	fprintf(logFile, "[%s] ", timeString);
+	vfprintf(logFile, format, args);
+	fprintf(logFile, "\n");
+	va_end(args);
+	
+	fclose(logFile);
+}
+
+void
 manage(Window w, XWindowAttributes *wa)
 {
 	Client *c, *t = NULL;
@@ -1467,6 +1495,37 @@ pop(Client *c)
 	attach(c);
 	focus(c);
 	arrange(c->mon);
+}
+
+bool processrunning(const char *name) {
+	DIR *dir = opendir("/proc");
+	if (!dir) {
+    fprintf(stderr, "Failed to check if process %s is running\n", name);
+		perror("opendir");
+		return false;
+	}
+	struct dirent *entry;
+	while ((entry = readdir(dir)) != NULL) {
+		if (entry->d_type == DT_DIR && strcmp(entry->d_name, ".") != 0 &&
+				strcmp(entry->d_name, "..") != 0) {
+			FILE *fp;
+			char filename[512], cmdline[1024];
+			snprintf(filename, sizeof(filename), "/proc/%s/cmdline", entry->d_name);
+			fp = fopen(filename, "r");
+			if (fp) {
+				if (fgets(cmdline, sizeof(cmdline), fp) != NULL) {
+					if (strcmp(name, cmdline) == 0) {
+						fclose(fp);
+						closedir(dir);
+						return true;
+					}
+				}
+				fclose(fp);
+			}
+		}
+	}
+	closedir(dir);
+	return false;
 }
 
 void
@@ -1874,6 +1933,7 @@ setmfact(const Arg *arg)
 void
 setup(void)
 {
+	dlog("Starting dwm");
 	int i;
 	XSetWindowAttributes wa;
 	Atom utf8string;
@@ -2069,24 +2129,24 @@ spawn(const Arg *arg)
 void
 spawnbar(void)
 {
-	if (!usealtbar) 
+	if (!usealtbar || processrunning("polybar"))
 		return;
 
 	Arg arg = {.v = polybar };
-  if (0 != system("pidof polybar >/dev/null 2>&1"))
-		spawn(&arg);
+	spawn(&arg);
+	dlog("Started polybar\n");
 }
 
 void
 spawnsxhkd(void)
 {
-	if (!usesxhkd)
+	if (!usesxhkd || processrunning("sxhkd"))
 		return;
 
 	mkfifo(SXHKD_FIFO, 0666);
 	Arg arg = {.v = sxhkd };
-  if (0 != system("pidof sxhkd >/dev/null 2>&1"))
-		spawn(&arg);
+	spawn(&arg);
+	dlog("Started sxhkd\n");
 }
 
 void
