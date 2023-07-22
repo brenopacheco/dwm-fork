@@ -23,7 +23,7 @@
 - [x] [ipc](https://dwm.suckless.org/patches/ipc/dwm-ipc-20201106-f04cac6.diff)
 - [x] [rose-pine](https://raw.githubusercontent.com/motolla/dwm-rose/main/colors/rose-pine.h)
 - [x] [clientmonoclesymbol](https://dwm.suckless.org/patches/clientmonoclesymbol/)
-- [ ] [sticky](https://dwm.suckless.org/patches/sticky/dwm-sticky-6.4.diff)
+- [x] [sticky](https://dwm.suckless.org/patches/sticky/dwm-sticky-6.4.diff)
 - [ ] [systray](https://dwm.suckless.org/patches/systray/dwm-systray-6.4.diff)
 
 ## Polybar configuration
