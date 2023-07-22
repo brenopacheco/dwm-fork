@@ -1,11 +1,13 @@
 # DWM 6.4 e81f17d fork
 
-1. TODO: when bar is visible, but polybar is not present, an additional gap is
-added. remove this gap
-
+1. TODO: when bar is visible, but polybar is not present, an additional gap is added. remove this gap
 2. only launch polybar if it has not yet launched
-3. launch sxhkd if it has not yet launched
-4. remove all keypress handling code
+3. launch sxhkd if it has not yet launched, add loop
+3. add sticky and systray
+4. add polybar subscribe
+5. sync sxhkd and picom conf
+6. add rofi conf
+7. test eww conf
 
 
 ## Patches
@@ -20,7 +22,9 @@ added. remove this gap
 - [x] [anyabar](https://dwm.suckless.org/patches/anybar/dwm-anybar-20200810-bb2e722.diff)
 - [x] [ipc](https://dwm.suckless.org/patches/ipc/dwm-ipc-20201106-f04cac6.diff)
 - [x] [rose-pine](https://raw.githubusercontent.com/motolla/dwm-rose/main/colors/rose-pine.h)
-- [x] sticky
+- [ ] [clientmonoclesymbol](https://dwm.suckless.org/patches/clientmonoclesymbol/)
+- [ ] [sticky](https://dwm.suckless.org/patches/sticky/dwm-sticky-6.4.diff)
+- [ ] [systray](https://dwm.suckless.org/patches/systray/dwm-systray-6.4.diff)
 
 ## Polybar configuration
 
@@ -33,52 +37,3 @@ Communicates via IPC on socket /tmp/dwm.sock
 ## EWW configuration
 
 https://www.reddit.com/r/unixporn/comments/yai8jv/dwm_eww_i_love_them/
-
-## SXHKD configuration
-
-Communicates via IPC on socket /tmp/dwm.sock
-
-```
-mod         + q            kill window
-mod + shift + q            quit dwm
-mod + shift + r            restart dwm
-
-mod         + t            toggle tiling mode
-mod         + f            toggle floating mode
-mod         + m            toggle monocle mode
-mod         + spc          toggle window float
-mod         + 0            toggle window full screen
-
-mod         + n            focus next window
-mod         + p            focus previous window
-mod         + tab          focus other monitor
-
-mod         + i            increase master stack size
-mod         + o            decrease master stack size
-mod         + h            increase master width
-mod         + l            decrease master width
-mod         + b            toggle top bar
-
-mod         + bsp          swap master
-mod + shift + tab          move window to next monitor
-mod         + {1-9}        switch to tag {1-9}
-mod + shift + {1-9}        move window to tag {1-9}
-mod + ctrl  + {1-9}        toggle tag {1-9}
-
-mod         + ret          launch terminal
-mod         + '            run launcher (wofi/rofi)
-mod         + s            run password manager (passmenu)
-mod         + w            open browser (maybe remove and customize rofi)
-mod         + e            open   tmux session
-mod         + a            attach tmux session
-
-available keys:
-
-- mod+{r,d}
-- mod+shift+{w,e,t,a,s,d,f,i,o,p,h,j,k,l,n,m,b}
-```
-
-## Picom configuration
-
-## Rofi configuration
-

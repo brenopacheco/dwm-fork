@@ -238,6 +238,7 @@ static void sighup(int unused);
 static void sigterm(int unused);
 static void spawn(const Arg *arg);
 static void spawnbar(void);
+static void spawnsxhkd(void);
 static void tag(const Arg *arg);
 static void tagmon(const Arg *arg);
 static void tile(Monitor *m);
@@ -323,7 +324,8 @@ static const unsigned int gappx     = 10;        /* gaps between windows */
 static const unsigned int snap      = 32;        /* snap pixel */
 static const int showbar            = 1;         /* 0 means no bar */
 static const int topbar             = 1;         /* 0 means bottom bar */
-static const int sxhkdRun           = 1;         /* launch sxhkd */
+// TODO: not working, also needs to setup fifo and loop
+static const int usesxhkd           = 1;         /* launch sxhkd */
 static const int usealtbar          = 0;         /* 1 means use non-dwm status bar */
 static const char *altbarclass      = "Polybar"; /* Alternate bar class name */
 static const int vertpad            = 10;        /* vertical padding of bar */
@@ -1931,6 +1933,7 @@ setup(void)
 	grabkeys();
 	focus(NULL);
 	spawnbar();
+	spawnsxhkd();
 	setupepoll();
 }
 void
@@ -2036,19 +2039,24 @@ spawn(const Arg *arg)
 void
 spawnbar(void)
 {
-	if (usealtbar) {
-		Arg arg = {.v = polybar };
+	if (!usealtbar) 
+		return;
+
+	Arg arg = {.v = polybar };
+  if (0 != system("pidof polybar >/dev/null 2>&1"))
 		spawn(&arg);
-	}
 }
 
 void
 spawnsxhkd(void)
 {
-	if (sxhkdRun) {
-		Arg arg = {.v = sxhkd };
+	if (!usesxhkd)
+		return;
+
+	mkfifo("/tmp/sxhkd.fifo", 0666);
+	Arg arg = {.v = sxhkd };
+  if (0 != system("pidof sxhkd >/dev/null 2>&1"))
 		spawn(&arg);
-	}
 }
 
 void
