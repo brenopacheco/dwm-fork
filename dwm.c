@@ -2143,6 +2143,7 @@ spawnsxhkd(void)
 	if (!usesxhkd || processrunning("sxhkd"))
 		return;
 
+	setenv("SXHKD_SHELL", "/bin/sh", 1);
 	mkfifo(SXHKD_FIFO, 0666);
 	Arg arg = {.v = sxhkd };
 	spawn(&arg);
@@ -2388,6 +2389,9 @@ updatebars(void)
 		XDefineCursor(dpy, m->barwin, cursor[CurNormal]->cursor);
 		XMapRaised(dpy, m->barwin);
 		XSetClassHint(dpy, m->barwin, &ch);
+		XChangeProperty(dpy, m->barwin, netatom[NetWMWindowType],
+										XA_ATOM, 32, PropModeReplace,
+										(unsigned char *)&netatom[NetWMWindowTypeDock], 1);
 	}
 }
 
