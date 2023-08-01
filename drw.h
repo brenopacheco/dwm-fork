@@ -1,5 +1,8 @@
 /* See LICENSE file for copyright and license details. */
 
+#include <X11/X.h>
+#include <X11/Xft/Xft.h>
+#include <X11/Xlib.h>
 typedef struct {
 	Cursor cursor;
 } Cur;
