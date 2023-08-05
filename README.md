@@ -1,11 +1,5 @@
 # DWM 6.4 e81f17d fork
 
-1. TODO: when bar is visible, but polybar is not present, an additional gap is added. remove this gap
-3. add sticky and systray
-4. add polybar subscribe
-6. add rofi conf
-7. test eww conf
-
 ## Patches
 - [-] [selfrestart](https://dwm.suckless.org/patches/selfrestart/dwm-r1615-selfrestart.diff)
 - [x] [restartsig](https://dwm.suckless.org/patches/restartsig/dwm-restartsig-20180523-6.2.diff)
@@ -21,7 +15,7 @@
 - [x] [clientmonoclesymbol](https://dwm.suckless.org/patches/clientmonoclesymbol/)
 - [x] [sticky](https://dwm.suckless.org/patches/sticky/dwm-sticky-6.4.diff)
 - [x] [focusonactive](https://dwm.suckless.org/patches/focusonnetactive/dwm-focusonnetactive-6.2.diff)
-- [ ] [systray](https://dwm.suckless.org/patches/systray/dwm-systray-6.4.diff)
+- [x] [systray](https://dwm.suckless.org/patches/systray/dwm-systray-6.4.diff)
 
 ## Polybar configuration
 
