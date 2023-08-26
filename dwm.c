@@ -439,7 +439,7 @@ static const char *termcmd[]  = { "st",      NULL };
 
 static const Key keys[] = {
 	/* modifier         key            function        argument */
-	{ MODKEY,           XK_x,          quit,           {0} },
+	// { MODKEY,           XK_x,          quit,           {0} },
 	{ MODKEY|ShiftMask, XK_x,          quit,           {1} },
 };
 
