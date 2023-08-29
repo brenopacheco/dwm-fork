@@ -17,14 +17,14 @@
 - [x] [focusonactive](https://dwm.suckless.org/patches/focusonnetactive/dwm-focusonnetactive-6.2.diff)
 - [x] [systray](https://dwm.suckless.org/patches/systray/dwm-systray-6.4.diff)
 
-## Polybar configuration
+## Simplification
 
-Communicates via IPC on socket /tmp/dwm.sock
-
-- [ ] Custom module for:
-  + [ ] Tags
-  + [ ] Mode (tiled, floating, monocle)
-
-## EWW configuration
-
-https://www.reddit.com/r/unixporn/comments/yai8jv/dwm_eww_i_love_them/
+- [restartsig](https://dwm.suckless.org/patches/restartsig/dwm-restartsig-20180523-6.2.diff)
+- [pertag](https://dwm.suckless.org/patches/pertag/dwm-pertag-20200914-61bb8b2.diff)
+- [alwayscenter](https://dwm.suckless.org/patches/alwayscenter/dwm-alwayscenter-20200625-f04cac6.diff)
+- [clientmonoclesymbol](https://dwm.suckless.org/patches/clientmonoclesymbol/)
+- [sticky](https://dwm.suckless.org/patches/sticky/dwm-sticky-6.4.diff)
+- [focusonactive](https://dwm.suckless.org/patches/focusonnetactive/dwm-focusonnetactive-6.2.diff)
+- [systray](https://dwm.suckless.org/patches/systray/dwm-systray-6.4.diff)
+- [actualfullscreen](https://dwm.suckless.org/patches/actualfullscreen/dwm-actualfullscreen-20211013-cb3f58a.diff)
+  + custom changes 
