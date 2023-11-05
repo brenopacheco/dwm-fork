@@ -470,7 +470,7 @@ static const Key keys[] = {
 	{ MODKEY,           XK_s,          spawn,          {.v = dmenu_pass   } }, // mod         + s       run passmenu
 	{ MODKEY,           XK_w,          spawn,          {.v = browser      } }, // mod         + w       open browser
 	{ MODKEY,           XK_e,          spawn,          {.v = tmux_open    } }, // mod         + e       launch tmux session
-	{ MODKEY,           XK_e,          spawn,          {.v = tmux_attach  } }, // mod         + e       attach tmux session
+	{ MODKEY,           XK_a,          spawn,          {.v = tmux_attach  } }, // mod         + e       attach tmux session
 	TAGKEYS(            XK_1,          0)                                      // mod         + {1-9}        switch to tag {1-9}
 	TAGKEYS(            XK_2,          1)                                      // mod + shift + Tab          move window to next monitor
 	TAGKEYS(            XK_3,          2)                                      // mod + shift + {1-9}        move window to tag {1-9}
