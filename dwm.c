@@ -360,19 +360,19 @@ static Window root, wmcheckwin;
 
 /* appearance */
 static const unsigned int borderpx  = 1;         /* border pixel of windows */
-// static const unsigned int gappx     = 10;        /* gaps between windows */
-static const unsigned int gappx     = 0;        /* gaps between windows */
+static const unsigned int gappx     = 10;        /* gaps between windows */
+// static const unsigned int gappx     = 0;        /* gaps between windows */
 static const unsigned int snap      = 32;        /* snap pixel */
 static const int showbar            = 1;         /* 0 means no bar */
 static const int topbar             = 1;         /* 0 means bottom bar */
 // TODO: not working, also needs to setup fifo and loop
-static const int usesxhkd           = 1;         /* launch sxhkd */
+static const int usesxhkd           = 0;         /* launch sxhkd */
 static const int usealtbar          = 0;         /* 1 means use non-dwm status bar */
 static const char *altbarclass      = "Polybar"; /* Alternate bar class name */
-// static const int vertpad            = 10;        /* vertical padding of bar */
-// static const int sidepad            = 10;        /* horizontal padding of bar */
-static const int vertpad            = 0;        /* vertical padding of bar */
-static const int sidepad            = 0;        /* horizontal padding of bar */
+static const int vertpad            = 10;        /* vertical padding of bar */
+static const int sidepad            = 10;        /* horizontal padding of bar */
+// static const int vertpad            = 0;        /* vertical padding of bar */
+// static const int sidepad            = 0;        /* horizontal padding of bar */
 static const int user_bh            = 28;        /* 0 means that dwm will calculate bar height, >= 1 means dwm will user_bh as bar height */
 static const unsigned int systraypinning = 0;   /* 0: sloppy systray follows selected monitor, >0: pin systray to monitor X */
 static const unsigned int systrayonleft = 0;    /* 0: systray in the right corner, >0: systray on left of status text */
@@ -402,9 +402,10 @@ static const Rule rules[] = {
 	 *	WM_CLASS(STRING) = instance, class
 	 *	WM_NAME(STRING) = title
 	 */
-	/* class      instance    title       tags mask     isfloating   monitor */
-	{ "Gimp",     NULL,       NULL,       0,            1,           -1 },
-	{ "Firefox",  NULL,       NULL,       1 << 8,       0,           -1 },
+	/* class,             instance, title, tags mask, isfloating, monitor */
+	{ "Gimp",             NULL,     NULL,  0,         1,          -1 },
+	{ "gnome-calculator", NULL,     NULL,  0,         1,          -1 },
+	{ "Weather",          NULL,     NULL,  0,         1,          -1 },
 };
 
 /* layout(s) */
@@ -433,24 +434,58 @@ static const char *monocles[] = { "󰼏", "󰼐", "󰼑", "󰼒", "󰼓", "󰼔"
 #define SXHKD_FIFO "/tmp/sxhkd.fifo"
 
 /* commands */
-static const char *sxhkd[]    = { "sxhkd", "-d", "10", "-s", SXHKD_FIFO, NULL };
-static const char *polybar[]  = { "polybar", NULL };
-static const char *termcmd[]  = { "st",      NULL };
+static const char *sxhkd[]         = { "sxhkd",            "-d",     "10", "-s", SXHKD_FIFO, NULL };
+static const char *polybar[]       = { "polybar",          NULL };
+static const char *termcmd[]       = { "st",               NULL };
+static const char *dmenu_apps[]    = { "dmenu_apps",       NULL };
+static const char *dmenu_pass[]    = { "dmenu_pass",       NULL };
+static const char *dmenu_tmux[]    = { "dmenu_session",    NULL };
+static const char *browser[]       = { "chromium",         NULL };
 
 static const Key keys[] = {
-	/* modifier         key            function        argument */
-	// { MODKEY,           XK_x,          quit,           {0} },
-	{ MODKEY|ShiftMask, XK_x,          quit,           {1} },
+	/* modifier,        key,           function,       argument */
+	{ MODKEY,           XK_q,          killclient,     {0}                },   // mod         + q       kill window
+	{ MODKEY|ShiftMask, XK_q,          quit,           {0                 } }, // mod + shift + q       quit dwm
+	{ MODKEY|ShiftMask, XK_r,          quit,           {1                 } }, // mod + shift + r       restart dwm
+	{ MODKEY,           XK_t,          setlayout,      {.v = &layouts[0]  } }, // mod         + t       toggle tiling mode
+	{ MODKEY,           XK_f,          setlayout,      {.v = &layouts[0]  } }, // mod         + f       toggle floating mode
+	{ MODKEY,           XK_m,          setlayout,      {.v = &layouts[0]  } }, // mod         + m       toggle monocle mode
+	{ MODKEY,           XK_space,      togglefloating, {0}                },   // mod         + spc     toggle window float
+	{ MODKEY,           XK_0,          togglefullscr,  {0}                },   // mod         + 0       toggle window full screen
+	{ MODKEY,           XK_n,          focusstack,     {.i = +1           } }, // mod         + n       focus next window
+	{ MODKEY,           XK_p,          focusstack,     {.i = -1           } }, // mod         + p       focus previous window
+	{ MODKEY,           XK_Tab,        focusmon,       {.i = +1           } }, // mod         + Tab     focus other monitor
+	{ MODKEY,           XK_i,          incnmaster,     {.i = +1           } }, // mod         + i       increase master stack size
+	{ MODKEY,           XK_o,          incnmaster,     {.i = -1           } }, // mod         + o       decrease master stack size
+	{ MODKEY,           XK_h,          setmfact,       {.f = -0.05        } }, // mod         + h       increase master width
+	{ MODKEY,           XK_l,          setmfact,       {.f = +0.05        } }, // mod         + l       decrease master width
+	{ MODKEY,           XK_b,          togglebar,      {0}                },   // mod         + b       toggle top bar
+	{ MODKEY,           XK_BackSpace,  zoom,           {0}                },   // mod         + bsp     swap master
+	{ MODKEY|ShiftMask, XK_Tab,        tagmon,         {.i = 1            } }, // mod + shift + Tab     move window to next monitor
+	{ MODKEY,           XK_Return,     spawn,          {.v = termcmd      } }, // mod         + ret     launch terminal
+	{ MODKEY,           XK_apostrophe, spawn,          {.v = dmenu_apps   } }, // mod         + '       run app launcher
+	{ MODKEY,           XK_s,          spawn,          {.v = dmenu_pass   } }, // mod         + s       run passmenu
+	{ MODKEY,           XK_w,          spawn,          {.v = browser      } }, // mod         + w       open browser
+	{ MODKEY,           XK_e,          spawn,          {.v = dmenu_tmux   } }, // mod         + e       open   tmux session
+	TAGKEYS(            XK_1,          0)                                      // mod         + {1-9}        switch to tag {1-9}
+	TAGKEYS(            XK_2,          1)                                      // mod + shift + Tab          move window to next monitor
+	TAGKEYS(            XK_3,          2)                                      // mod + shift + {1-9}        move window to tag {1-9}
+	TAGKEYS(            XK_4,          3)                                      // mod + ctrl  + {1-9}        toggle tag {1-9}
+	TAGKEYS(            XK_5,          4)
+	TAGKEYS(            XK_6,          5)
+	TAGKEYS(            XK_7,          6)
+	TAGKEYS(            XK_8,          7)
+	TAGKEYS(            XK_9,          8)
 };
 
 static const Button buttons[] = {
 	{ ClkClientWin,     MODKEY,    Button1,    movemouse,        {0} },
 	{ ClkClientWin,     MODKEY,    Button2,    togglefloating,   {0} },
 	{ ClkClientWin,     MODKEY,    Button3,    resizemouse,      {0} },
-  { ClkStatusText,    0,         Button3,    spawn,            {.v = termcmd}},
+  { ClkStatusText,    0,         Button3,    spawn,            {.v = termcmd} },
 	{ ClkTagBar,        0,         Button1,    view,             {0} },
 	{ ClkTagBar,        0,         Button3,    toggleview,       {0} },
-  { ClkLtSymbol,      0,         Button1,    setlayout,        {0}},
+  { ClkLtSymbol,      0,         Button1,    setlayout,        {0} },
 	{ ClkTagBar,        MODKEY,    Button1,    tag,              {0} },
 	{ ClkTagBar,        MODKEY,    Button3,    toggletag,        {0} },
 };
