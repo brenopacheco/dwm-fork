@@ -360,8 +360,8 @@ static Window root, wmcheckwin;
 
 /* appearance */
 static const unsigned int borderpx  = 1;         /* border pixel of windows */
-static const unsigned int gappx     = 10;        /* gaps between windows */
-// static const unsigned int gappx     = 0;        /* gaps between windows */
+// static const unsigned int gappx     = 10;        /* gaps between windows */
+static const unsigned int gappx     = 0;        /* gaps between windows */
 static const unsigned int snap      = 32;        /* snap pixel */
 static const int showbar            = 1;         /* 0 means no bar */
 static const int topbar             = 1;         /* 0 means bottom bar */
@@ -369,10 +369,10 @@ static const int topbar             = 1;         /* 0 means bottom bar */
 static const int usesxhkd           = 0;         /* launch sxhkd */
 static const int usealtbar          = 0;         /* 1 means use non-dwm status bar */
 static const char *altbarclass      = "Polybar"; /* Alternate bar class name */
-static const int vertpad            = 10;        /* vertical padding of bar */
-static const int sidepad            = 10;        /* horizontal padding of bar */
-// static const int vertpad            = 0;        /* vertical padding of bar */
-// static const int sidepad            = 0;        /* horizontal padding of bar */
+// static const int vertpad            = 10;        /* vertical padding of bar */
+// static const int sidepad            = 10;        /* horizontal padding of bar */
+static const int vertpad            = 0;        /* vertical padding of bar */
+static const int sidepad            = 0;        /* horizontal padding of bar */
 static const int user_bh            = 28;        /* 0 means that dwm will calculate bar height, >= 1 means dwm will user_bh as bar height */
 static const unsigned int systraypinning = 0;   /* 0: sloppy systray follows selected monitor, >0: pin systray to monitor X */
 static const unsigned int systrayonleft = 0;    /* 0: systray in the right corner, >0: systray on left of status text */
@@ -405,7 +405,9 @@ static const Rule rules[] = {
 	/* class,             instance, title, tags mask, isfloating, monitor */
 	{ "Gimp",             NULL,     NULL,  0,         1,          -1 },
 	{ "gnome-calculator", NULL,     NULL,  0,         1,          -1 },
+	{ "gnome-calendar",   NULL,     NULL,  0,         1,          -1 },
 	{ "Weather",          NULL,     NULL,  0,         1,          -1 },
+	{ "st-float",         NULL,     NULL,  0,         1,          -1 },
 };
 
 /* layout(s) */
@@ -448,8 +450,8 @@ static const Key keys[] = {
 	{ MODKEY|ShiftMask, XK_q,          quit,           {0                 } }, // mod + shift + q       quit dwm
 	{ MODKEY|ShiftMask, XK_r,          quit,           {1                 } }, // mod + shift + r       restart dwm
 	{ MODKEY,           XK_t,          setlayout,      {.v = &layouts[0]  } }, // mod         + t       toggle tiling mode
-	{ MODKEY,           XK_f,          setlayout,      {.v = &layouts[0]  } }, // mod         + f       toggle floating mode
-	{ MODKEY,           XK_m,          setlayout,      {.v = &layouts[0]  } }, // mod         + m       toggle monocle mode
+	{ MODKEY,           XK_f,          setlayout,      {.v = &layouts[1]  } }, // mod         + f       toggle floating mode
+	{ MODKEY,           XK_m,          setlayout,      {.v = &layouts[2]  } }, // mod         + m       toggle monocle mode
 	{ MODKEY,           XK_space,      togglefloating, {0}                },   // mod         + spc     toggle window float
 	{ MODKEY,           XK_0,          togglefullscr,  {0}                },   // mod         + 0       toggle window full screen
 	{ MODKEY,           XK_n,          focusstack,     {.i = +1           } }, // mod         + n       focus next window
@@ -461,7 +463,7 @@ static const Key keys[] = {
 	{ MODKEY,           XK_l,          setmfact,       {.f = +0.05        } }, // mod         + l       decrease master width
 	{ MODKEY,           XK_b,          togglebar,      {0}                },   // mod         + b       toggle top bar
 	{ MODKEY,           XK_BackSpace,  zoom,           {0}                },   // mod         + bsp     swap master
-	{ MODKEY|ShiftMask, XK_Tab,        tagmon,         {.i = 1            } }, // mod + shift + Tab     move window to next monitor
+	{ MODKEY|ShiftMask, XK_Tab,        tagmon,         {.i = +1           } }, // mod + shift + Tab     move window to next monitor
 	{ MODKEY,           XK_Return,     spawn,          {.v = termcmd      } }, // mod         + ret     launch terminal
 	{ MODKEY,           XK_apostrophe, spawn,          {.v = dmenu_apps   } }, // mod         + '       run app launcher
 	{ MODKEY,           XK_s,          spawn,          {.v = dmenu_pass   } }, // mod         + s       run passmenu
