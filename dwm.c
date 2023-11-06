@@ -403,11 +403,12 @@ static const Rule rules[] = {
 	 *	WM_NAME(STRING) = title
 	 */
 	/* class,             instance, title, tags mask, isfloating, monitor */
+	{ "st-float",         NULL,     NULL,  0,         1,          -1 },
 	{ "Gimp",             NULL,     NULL,  0,         1,          -1 },
 	{ "gnome-calculator", NULL,     NULL,  0,         1,          -1 },
 	{ "gnome-calendar",   NULL,     NULL,  0,         1,          -1 },
 	{ "Weather",          NULL,     NULL,  0,         1,          -1 },
-	{ "st-float",         NULL,     NULL,  0,         1,          -1 },
+	{ "Gpick",            NULL,     NULL,  0,         1,          -1 },
 };
 
 /* layout(s) */
@@ -444,6 +445,7 @@ static const char *dmenu_pass[]    = { "dmenu_pass",    NULL                    
 static const char *tmux_open[]     = { "dmenu_session", "-o", NULL                         };
 static const char *tmux_attach[]   = { "dmenu_session", "-a", NULL                         };
 static const char *browser[]       = { "chromium",      NULL                               };
+static const char *xkill[]         = { "xkill",      NULL                                  };
 
 static const Key keys[] = {
 	/* modifier,        key,           function,       argument */
@@ -471,10 +473,11 @@ static const Key keys[] = {
 	{ MODKEY,           XK_w,          spawn,          {.v = browser      } }, // mod         + w       open browser
 	{ MODKEY,           XK_e,          spawn,          {.v = tmux_open    } }, // mod         + e       launch tmux session
 	{ MODKEY,           XK_a,          spawn,          {.v = tmux_attach  } }, // mod         + e       attach tmux session
-	TAGKEYS(            XK_1,          0)                                      // mod         + {1-9}        switch to tag {1-9}
-	TAGKEYS(            XK_2,          1)                                      // mod + shift + Tab          move window to next monitor
-	TAGKEYS(            XK_3,          2)                                      // mod + shift + {1-9}        move window to tag {1-9}
-	TAGKEYS(            XK_4,          3)                                      // mod + ctrl  + {1-9}        toggle tag {1-9}
+	{ MODKEY,           XK_x,          spawn,          {.v = xkill        } }, // mod         + x       runs xkill
+	TAGKEYS(            XK_1,          0)                                      // mod         + {1-9}   switch to tag {1-9}
+	TAGKEYS(            XK_2,          1)                                      // mod + shift + Tab     move window to next monitor
+	TAGKEYS(            XK_3,          2)                                      // mod + shift + {1-9}   move window to tag {1-9}
+	TAGKEYS(            XK_4,          3)                                      // mod + ctrl  + {1-9}   toggle tag {1-9}
 	TAGKEYS(            XK_5,          4)
 	TAGKEYS(            XK_6,          5)
 	TAGKEYS(            XK_7,          6)
