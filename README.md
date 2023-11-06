@@ -27,4 +27,3 @@
 - [focusonactive](https://dwm.suckless.org/patches/focusonnetactive/dwm-focusonnetactive-6.2.diff)
 - [systray](https://dwm.suckless.org/patches/systray/dwm-systray-6.4.diff)
 - [actualfullscreen](https://dwm.suckless.org/patches/actualfullscreen/dwm-actualfullscreen-20211013-cb3f58a.diff)
-  + custom changes 
