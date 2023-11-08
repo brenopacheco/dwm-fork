@@ -442,10 +442,11 @@ static const char *polybar[]       = { "polybar",       NULL                    
 static const char *termcmd[]       = { "st",            NULL                               };
 static const char *dmenu_apps[]    = { "dmenu_apps",    NULL                               };
 static const char *dmenu_pass[]    = { "dmenu_pass",    NULL                               };
+static const char *dmenu_window[]  = { "dmenu_window",  NULL                               };
 static const char *tmux_open[]     = { "dmenu_session", "-o", NULL                         };
 static const char *tmux_attach[]   = { "dmenu_session", "-a", NULL                         };
 static const char *browser[]       = { "chromium",      NULL                               };
-static const char *xkill[]         = { "xkill",      NULL                                  };
+static const char *xkill[]         = { "xkill",         NULL                               };
 
 static const Key keys[] = {
 	/* modifier,        key,           function,       argument */
@@ -470,9 +471,10 @@ static const Key keys[] = {
 	{ MODKEY,           XK_Return,     spawn,          {.v = termcmd      } }, // mod         + ret     launch terminal
 	{ MODKEY,           XK_apostrophe, spawn,          {.v = dmenu_apps   } }, // mod         + '       run app launcher
 	{ MODKEY,           XK_s,          spawn,          {.v = dmenu_pass   } }, // mod         + s       run passmenu
+	{ MODKEY,           XK_d,          spawn,          {.v = dmenu_window } }, // mod         + d       change window
 	{ MODKEY,           XK_w,          spawn,          {.v = browser      } }, // mod         + w       open browser
 	{ MODKEY,           XK_e,          spawn,          {.v = tmux_open    } }, // mod         + e       launch tmux session
-	{ MODKEY,           XK_a,          spawn,          {.v = tmux_attach  } }, // mod         + e       attach tmux session
+	{ MODKEY,           XK_a,          spawn,          {.v = tmux_attach  } }, // mod         + a       attach tmux session
 	{ MODKEY,           XK_x,          spawn,          {.v = xkill        } }, // mod         + x       runs xkill
 	TAGKEYS(            XK_1,          0)                                      // mod         + {1-9}   switch to tag {1-9}
 	TAGKEYS(            XK_2,          1)                                      // mod + shift + Tab     move window to next monitor
