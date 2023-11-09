@@ -458,6 +458,7 @@ static const Key keys[] = {
 	{ MODKEY,           XK_m,          setlayout,      {.v = &layouts[2]  } }, // mod         + m       toggle monocle mode
 	{ MODKEY,           XK_space,      togglefloating, {0}                },   // mod         + spc     toggle window float
 	{ MODKEY,           XK_0,          togglefullscr,  {0}                },   // mod         + 0       toggle window full screen
+	{ MODKEY,           XK_v,          togglesticky,   {0}                },   // mod         + v       toggle sticky window
 	{ MODKEY,           XK_n,          focusstack,     {.i = +1           } }, // mod         + n       focus next window
 	{ MODKEY,           XK_p,          focusstack,     {.i = -1           } }, // mod         + p       focus previous window
 	{ MODKEY,           XK_Tab,        focusmon,       {.i = +1           } }, // mod         + Tab     focus other monitor
