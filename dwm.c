@@ -409,6 +409,8 @@ static const Rule rules[] = {
 	{ "gnome-calendar",   NULL,     NULL,  0,         1,          -1 },
 	{ "Weather",          NULL,     NULL,  0,         1,          -1 },
 	{ "Gpick",            NULL,     NULL,  0,         1,          -1 },
+	{ "Pavucontrol",      NULL,     NULL,  0,         1,          -1 },
+	{ "blueman-manager",  NULL,     NULL,  0,         1,          -1 },
 };
 
 /* layout(s) */
