@@ -449,6 +449,7 @@ static const char *tmux_open[]     = { "dmenu_session", "-o", NULL              
 static const char *tmux_attach[]   = { "dmenu_session", "-a", NULL                         };
 static const char *browser[]       = { "chromium",      NULL                               };
 static const char *xkill[]         = { "xkill",         NULL                               };
+static const char *screengrab[]    = { "screengrab",    "-r", NULL                         };
 
 static const Key keys[] = {
 	/* modifier,        key,           function,       argument */
