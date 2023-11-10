@@ -410,7 +410,7 @@ static const Rule rules[] = {
 	{ "Weather",          NULL,     NULL,  0,         1,          -1 },
 	{ "Gpick",            NULL,     NULL,  0,         1,          -1 },
 	{ "Pavucontrol",      NULL,     NULL,  0,         1,          -1 },
-	{ "blueman-manager",  NULL,     NULL,  0,         1,          -1 },
+	{ "Blueman-manager",  NULL,     NULL,  0,         1,          -1 },
 };
 
 /* layout(s) */
