@@ -397,6 +397,8 @@ static const char *colors[][3]  = {
 /* tagging */
 static const char *tags[] = { "",  "󰒱", "", "", "", "󰊫", "󰭹", "󰲸", "󰗃" };
 
+#define FLOAT(CLASS) { CLASS, NULL, NULL, 0, 1, 1 }
+
 static const Rule rules[] = {
 	/* xprop(1):
 	 *	WM_CLASS(STRING) = instance, class
@@ -411,6 +413,16 @@ static const Rule rules[] = {
 	{ "Gpick",            NULL,     NULL,  0,         1,          -1 },
 	{ "Pavucontrol",      NULL,     NULL,  0,         1,          -1 },
 	{ "Blueman-manager",  NULL,     NULL,  0,         1,          -1 },
+	{ "Arandr",           NULL,     NULL,  0,         1,          -1 },
+	{ "screengrab",       NULL,     NULL,  0,         1,          -1 },
+	{ "Conky",            NULL,     NULL,  0,         1,          -1 },
+	FLOAT("Nm-connection-editor"),
+	FLOAT("gnome-font-viewer"),
+	FLOAT("File-roller"),
+	FLOAT("Xarchiver"),
+	FLOAT("Gvim"),
+	FLOAT("Lxappearance"),
+	FLOAT("fragments")
 };
 
 /* layout(s) */
@@ -480,6 +492,7 @@ static const Key keys[] = {
 	{ MODKEY,           XK_e,          spawn,          {.v = tmux_open    } }, // mod         + e       launch tmux session
 	{ MODKEY,           XK_a,          spawn,          {.v = tmux_attach  } }, // mod         + a       attach tmux session
 	{ MODKEY,           XK_x,          spawn,          {.v = xkill        } }, // mod         + x       runs xkill
+	{ MODKEY,           XK_minus,      spawn,          {.v = screengrab   } }, // mod         + minus   runs screengrab
 	TAGKEYS(            XK_1,          0)                                      // mod         + {1-9}   switch to tag {1-9}
 	TAGKEYS(            XK_2,          1)                                      // mod + shift + Tab     move window to next monitor
 	TAGKEYS(            XK_3,          2)                                      // mod + shift + {1-9}   move window to tag {1-9}
