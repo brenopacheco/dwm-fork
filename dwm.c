@@ -422,7 +422,8 @@ static const Rule rules[] = {
 	FLOAT("Xarchiver"),
 	FLOAT("Gvim"),
 	FLOAT("Lxappearance"),
-	FLOAT("fragments")
+	FLOAT("fragments"),
+	FLOAT("thunderbird")
 };
 
 /* layout(s) */
