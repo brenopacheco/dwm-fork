@@ -414,7 +414,7 @@ static const Rule rules[] = {
 	{ "Pavucontrol",      NULL,     NULL,  0,         1,          -1 },
 	{ "Blueman-manager",  NULL,     NULL,  0,         1,          -1 },
 	{ "Arandr",           NULL,     NULL,  0,         1,          -1 },
-	{ "screengrab",       NULL,     NULL,  0,         1,          -1 },
+	// { "screengrab",       NULL,     NULL,  0,         1,          -1 },
 	{ "Conky",            NULL,     NULL,  0,         1,          -1 },
 	FLOAT("Nm-connection-editor"),
 	FLOAT("gnome-font-viewer"),
