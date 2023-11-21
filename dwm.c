@@ -395,7 +395,8 @@ static const char *colors[][3]  = {
 };
 
 /* tagging */
-static const char *tags[] = { "",  "󰒱", "", "", "", "󰊫", "󰭹", "󰲸", "󰗃" };
+// static const char *tags[] = { "",  "󰒱", "", "", "", "󰊫", "󰭹", "󰲸", "󰗃" };
+static const char *tags[] = { "", "", "󰈹", "󰒱", "… 󰗃" };
 
 #define FLOAT(CLASS) { CLASS, NULL, NULL, 0, 1, 1 }
 
@@ -414,7 +415,6 @@ static const Rule rules[] = {
 	{ "Pavucontrol",      NULL,     NULL,  0,         1,          -1 },
 	{ "Blueman-manager",  NULL,     NULL,  0,         1,          -1 },
 	{ "Arandr",           NULL,     NULL,  0,         1,          -1 },
-	// { "screengrab",       NULL,     NULL,  0,         1,          -1 },
 	{ "Conky",            NULL,     NULL,  0,         1,          -1 },
 	FLOAT("Nm-connection-editor"),
 	FLOAT("gnome-font-viewer"),
@@ -499,10 +499,14 @@ static const Key keys[] = {
 	TAGKEYS(            XK_3,          2)                                      // mod + shift + {1-9}   move window to tag {1-9}
 	TAGKEYS(            XK_4,          3)                                      // mod + ctrl  + {1-9}   toggle tag {1-9}
 	TAGKEYS(            XK_5,          4)
-	TAGKEYS(            XK_6,          5)
-	TAGKEYS(            XK_7,          6)
-	TAGKEYS(            XK_8,          7)
-	TAGKEYS(            XK_9,          8)
+	TAGKEYS(            XK_6,          4)
+	TAGKEYS(            XK_7,          4)
+	TAGKEYS(            XK_8,          4)
+	TAGKEYS(            XK_9,          4)
+	// TAGKEYS(            XK_6,          5)
+	// TAGKEYS(            XK_7,          6)
+	// TAGKEYS(            XK_8,          7)
+	// TAGKEYS(            XK_9,          8)
 };
 
 static const Button buttons[] = {
