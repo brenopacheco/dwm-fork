@@ -487,7 +487,7 @@ static const Key keys[] = {
 	{ MODKEY,           XK_BackSpace,  zoom,           {0}                },   // mod         + bsp     swap master
 	{ MODKEY|ShiftMask, XK_Tab,        tagmon,         {.i = +1           } }, // mod + shift + Tab     move window to next monitor
 	{ MODKEY,           XK_Return,     spawn,          {.v = termcmd      } }, // mod         + ret     launch terminal
-	{ MODKEY,           XK_apostrophe, spawn,          {.v = dmenu_apps   } }, // mod         + '       run app launcher
+	{ MODKEY,           XK_grave,      spawn,          {.v = dmenu_apps   } }, // mod         + '       run app launcher
 	{ MODKEY,           XK_s,          spawn,          {.v = dmenu_pass   } }, // mod         + s       run passmenu
 	{ MODKEY,           XK_d,          spawn,          {.v = dmenu_window } }, // mod         + d       change window
 	{ MODKEY,           XK_w,          spawn,          {.v = browser      } }, // mod         + w       open browser
