@@ -461,10 +461,10 @@ static const char *dmenu_pass[]    = { "dmenu_pass",    NULL                    
 static const char *dmenu_window[]  = { "dmenu_window",  NULL                               };
 static const char *tmux_open[]     = { "dmenu_session", "-o", NULL                         };
 static const char *tmux_attach[]   = { "dmenu_session", "-a", NULL                         };
+static const char *dmenu_sketch[] =  { "dmenu_sketch",  "-i", NULL                         };
 static const char *browser[]       = { "chromium",      NULL                               };
 static const char *xkill[]         = { "xkill",         NULL                               };
 static const char *screengrab[]    = { "screengrab",    "-r", NULL                         };
-static const char *sketch[]    =     { "sketch",        "-i", NULL                         };
 
 static const Key keys[] = {
 	/* modifier,        key,           function,       argument */
@@ -496,7 +496,7 @@ static const Key keys[] = {
 	{ MODKEY,           XK_a,          spawn,          {.v = tmux_attach  } }, // mod         + a       attach tmux session
 	{ MODKEY,           XK_x,          spawn,          {.v = xkill        } }, // mod         + x       runs xkill
 	{ MODKEY,           XK_minus,      spawn,          {.v = screengrab   } }, // mod         + minus   runs screengrab
-	{ MODKEY,           XK_equal,      spawn,          {.v = sketch       } }, // mod         + equal   creates new sketch
+	{ MODKEY,           XK_equal,      spawn,          {.v = dmenu_sketch } }, // mod         + equal   creates new sketch
 	TAGKEYS(            XK_1,          0)                                      // mod         + {1-9}   switch to tag {1-9}
 	TAGKEYS(            XK_2,          1)                                      // mod + shift + Tab     move window to next monitor
 	TAGKEYS(            XK_3,          2)                                      // mod + shift + {1-9}   move window to tag {1-9}
