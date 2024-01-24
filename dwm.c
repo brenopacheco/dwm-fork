@@ -417,6 +417,7 @@ static const Rule rules[] = {
 	{ "Arandr",           NULL,     NULL,  0,         1,          -1 },
 	{ "Conky",            NULL,     NULL,  0,         1,          -1 },
 	{ "Slack",            NULL,     NULL,  1 << 1,    0,          -1 },
+	{ "Sxiv",             NULL,     NULL,  0,         0,          -1 },
 	FLOAT("Nm-connection-editor"),
 	FLOAT("gnome-font-viewer"),
 	FLOAT("File-roller"),
