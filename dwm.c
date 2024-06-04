@@ -444,7 +444,9 @@ static const Layout layouts[] = {
 static const char *monocles[] = { "󰼏", "󰼐", "󰼑", "󰼒", "󰼓", "󰼔", "󰼕", "󰼖", "󰼗", "󰼘" };
 
 /* key definitions */
-#define MODKEY Mod4Mask
+// Mod4Mask -> win key
+// Mod3Mask -> alt key
+#define MODKEY Mod3Mask
 #define TAGKEYS(KEY,TAG) \
 	{ MODKEY,                       KEY,      view,           {.ui = 1 << TAG} }, \
 	{ MODKEY|ControlMask,           KEY,      toggleview,     {.ui = 1 << TAG} }, \
