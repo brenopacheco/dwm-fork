@@ -396,7 +396,7 @@ static const char *colors[][3]  = {
 
 /* tagging */
 // static const char *tags[] = { "",  "󰒱", "", "", "", "󰊫", "󰭹", "󰲸", "󰗃" };
-static const char *tags[] = { "", "󰒱", "󰈹", "󰊢", "󰗃" };
+static const char *tags[] = { "", "󰊢", "󰈹", "󰒱" ,"󰊫", "󰲸" };
 
 #define FLOAT(CLASS) { CLASS, NULL, NULL, 0, 1, 1 }
 
@@ -416,7 +416,8 @@ static const Rule rules[] = {
 	{ "Blueman-manager",  NULL,     NULL,  0,         1,          -1 },
 	{ "Arandr",           NULL,     NULL,  0,         1,          -1 },
 	{ "Conky",            NULL,     NULL,  0,         1,          -1 },
-	{ "Slack",            NULL,     NULL,  1 << 1,    0,          -1 },
+	{ "Slack",            NULL,     NULL,  1 << 3,    0,          -1 },
+	{ "thunderbird",      NULL,     NULL,  1 << 4,    0,          -1 },
 	{ "Sxiv",             NULL,     NULL,  0,         0,          -1 },
 	FLOAT("Nm-connection-editor"),
 	FLOAT("gnome-font-viewer"),
@@ -424,8 +425,7 @@ static const Rule rules[] = {
 	FLOAT("Xarchiver"),
 	FLOAT("Gvim"),
 	FLOAT("Lxappearance"),
-	FLOAT("fragments"),
-	FLOAT("thunderbird")
+	FLOAT("fragments")
 };
 
 /* layout(s) */
