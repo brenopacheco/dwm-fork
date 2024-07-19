@@ -396,7 +396,7 @@ static const char *colors[][3]  = {
 
 /* tagging */
 // static const char *tags[] = { "",  "󰒱", "", "", "", "󰊫", "󰭹", "󰲸", "󰗃" };
-static const char *tags[] = { "", "󰊢", "󰈹", "󰒱" ,"󰊫", "󰲸" };
+static const char *tags[] = { "", "󰒱", "󰈹", "󰊫", "󰲸" };
 
 #define FLOAT(CLASS) { CLASS, NULL, NULL, 0, 1, 1 }
 
