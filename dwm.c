@@ -398,7 +398,7 @@ static const char *colors[][3]  = {
 // static const char *tags[] = { "",  "󰒱", "", "", "", "󰊫", "󰭹", "󰲸", "󰗃" };
 static const char *tags[] = { "", "󰒱", "󰈹", "󰊫", "󰲸" };
 
-#define FLOAT(CLASS) { CLASS, NULL, NULL, 0, 1, 1 }
+#define FLOAT(CLASS, INSTANCE) { CLASS, INSTANCE, NULL, 0, 1, 1 }
 
 static const Rule rules[] = {
 	/* xprop(1):
@@ -419,13 +419,14 @@ static const Rule rules[] = {
 	{ "Slack",            NULL,     NULL,  1 << 1,    0,          -1 },
 	{ "thunderbird",      NULL,     NULL,  1 << 3,    0,          -1 },
 	{ "Sxiv",             NULL,     NULL,  0,         0,          -1 },
-	FLOAT("Nm-connection-editor"),
-	FLOAT("gnome-font-viewer"),
-	FLOAT("File-roller"),
-	FLOAT("Xarchiver"),
-	FLOAT("Gvim"),
-	FLOAT("Lxappearance"),
-	FLOAT("fragments")
+	FLOAT("Nm-connection-editor", NULL),
+	FLOAT("gnome-font-viewer", NULL),
+	FLOAT("File-roller", NULL),
+	FLOAT("Xarchiver", NULL),
+	FLOAT("Gvim", NULL),
+	FLOAT("Lxappearance", NULL),
+	FLOAT("fragments", NULL),
+	FLOAT("thunderbird", "Msgcompose")
 };
 
 /* layout(s) */
