@@ -2,3 +2,7 @@ drw.o
 dwm
 dwm.o
 util.o
+build/*
+!build/Makefile
+!build/PKGBUILD
+bundle.tar.gz

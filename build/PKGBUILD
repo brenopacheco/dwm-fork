@@ -1,0 +1,23 @@
+# shellcheck disable=all
+
+pkgname=dwm-fork
+pkgver=6.5
+pkgrel=1
+pkgdesc="Dynamic window manager (dwm) fork"
+arch=(x86_64)
+license=('MIT')
+options=(zipman)
+depends=('libx11' 'libxinerama' 'libxft' 'freetype2')
+conflicts=('dwm')
+
+source=("http://localhost:8888/bundle.tar.gz")
+
+md5sums=('SKIP')
+
+build() {
+	make X11INC=/usr/include/X11 X11LIB=/usr/lib
+}
+
+package() {
+	make PREFIX=/usr DESTDIR="$pkgdir" install
+}
