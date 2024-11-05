@@ -43,6 +43,7 @@ static const Rule rules[] = {
 	{ "Blueman-manager",  NULL,         NULL,  0,         1,          -1 },
 	{ "Sxiv",             NULL,         NULL,  0,         0,          -1 },
 	{ "Arandr",           NULL,         NULL,  0,         1,          -1 },
+	{ "st-floating",      NULL,         NULL,  0,         1,          -1 },
 	{ "File-roller",      NULL,         NULL,  0,         1,          -1 },
 	{ "Slack",            NULL,         NULL,  1 << 1,    0,           1 },
 	{ "thunderbird",      NULL,         NULL,  1 << 3,    0,           1 },
@@ -77,6 +78,7 @@ static const char *monocles[] = { "󰼏", "󰼐", "󰼑", "󰼒", "󰼓", "󰼔"
 
 /* commands */
 static const char *termcmd[]       = { "st",            NULL                               };
+static const char *termfloatcmd[]  = { "st",            "-n", "st-floating", NULL          };
 static const char *dmenu_apps[]    = { "dmenu_apps",    NULL                               };
 static const char *dmenu_pass[]    = { "dmenu_pass",    NULL                               };
 static const char *dmenu_window[]  = { "dmenu_window",  NULL                               };
@@ -88,6 +90,7 @@ static const char *screengrab[]    = { "screengrab",    "-r", NULL              
 static const Key keys[] = {
 	/* modifier                     key           function        argument */
 	{ MODKEY,                       XK_Return,    spawn,          {.v = termcmd } },
+	{ MODKEY|ShiftMask,             XK_Return,    spawn,          {.v = termfloatcmd } },
 	{ MODKEY|ShiftMask,             XK_r,         quit,           {1 } },
 	{ MODKEY,                       XK_q,         killclient,     {0} },
 	{ MODKEY|ShiftMask,             XK_q,         quit,           {0} },
