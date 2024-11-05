@@ -43,7 +43,7 @@ static const Rule rules[] = {
 	{ "Blueman-manager",  NULL,         NULL,  0,         1,          -1 },
 	{ "Sxiv",             NULL,         NULL,  0,         0,          -1 },
 	{ "Arandr",           NULL,         NULL,  0,         1,          -1 },
-	{ "st-floating",      NULL,         NULL,  0,         1,          -1 },
+	{ "st-256color",      "st-floating",NULL,  0,         1,          -1 },
 	{ "File-roller",      NULL,         NULL,  0,         1,          -1 },
 	{ "Slack",            NULL,         NULL,  1 << 1,    0,           1 },
 	{ "thunderbird",      NULL,         NULL,  1 << 3,    0,           1 },
