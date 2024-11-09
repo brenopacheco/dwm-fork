@@ -17,7 +17,7 @@ dwm: ${OBJ}
 	${CC} -o $@ ${OBJ} ${LDFLAGS}
 
 clean:
-	rm -rf dwm ${OBJ} dwm-${VERSION}.tar.gz ${BUILD}
+	rm -rf dwm ${OBJ} dwm-*.tar.gz ${BUILD}
 
 version:
 	@echo ${VERSION}
@@ -36,4 +36,4 @@ test: all
 	@DISPLAY=:1 dwm
 	@pkill Xephyr
 
-.PHONY: all clean dist install uninstall test
+.PHONY: all clean dist test
