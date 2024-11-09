@@ -13,35 +13,26 @@ all: dwm
 
 ${OBJ}: config.h config.mk
 
-config.h:
-	cp config.def.h $@
-
 dwm: ${OBJ}
 	${CC} -o $@ ${OBJ} ${LDFLAGS}
 
 clean:
-	rm -f dwm ${OBJ} dwm-${VERSION}.tar.gz
+	rm -rf dwm ${OBJ} dwm-${VERSION}.tar.gz ${BUILD}
 
-dist: clean
-	mkdir -p dwm-${VERSION}
-	cp -R LICENSE Makefile README config.def.h config.mk\
-		dwm.1 drw.h util.h ${SRC} dwm.png transient.c dwm-${VERSION}
-	tar -cf dwm-${VERSION}.tar dwm-${VERSION}
+version:
+	@echo ${VERSION}
+
+dist: all
+	tar --create --file=dwm-${VERSION}.tar --transform 's,^,bin/,' --mode='755' dwm
+	tar --append --file=dwm-${VERSION}.tar --transform 's,^,share/man/man1/,' --mode='644' dwm.1
+	tar --append --file=dwm-${VERSION}.tar --transform 's,^,share/xsessions/,' --mode='644' dwm.desktop
 	gzip dwm-${VERSION}.tar
-	rm -rf dwm-${VERSION}
 
-install: all
-	mkdir -p ${DESTDIR}${PREFIX}/bin
-	cp -f dwm ${DESTDIR}${PREFIX}/bin
-	chmod 755 ${DESTDIR}${PREFIX}/bin/dwm
-	mkdir -p ${DESTDIR}${MANPREFIX}/man1
-	sed "s/VERSION/${VERSION}/g" < dwm.1 > ${DESTDIR}${MANPREFIX}/man1/dwm.1
-	chmod 644 ${DESTDIR}${MANPREFIX}/man1/dwm.1
-	mkdir -p ${DESTDIR}${PREFIX}/share/xsessions
-	cp -f dwm.desktop ${DESTDIR}${PREFIX}/share/xsessions/dwm.desktop
+test: all
+	@echo "Ctrl+Shift to lock/unlock"
+	@Xephyr -br -ac -noreset -screen 1024x768 :1 >/dev/null 2>&1 &
+	@while ! xdpyinfo -display :1 >/dev/null 2>&1; do sleep 0.1; done
+	@DISPLAY=:1 dwm
+	@pkill Xephyr
 
-uninstall:
-	rm -f ${DESTDIR}${PREFIX}/bin/dwm\
-		${DESTDIR}${MANPREFIX}/man1/dwm.1
-
-.PHONY: all clean dist install uninstall
+.PHONY: all clean dist install uninstall test
