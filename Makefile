@@ -27,7 +27,7 @@ dist: all
 	tar --append --file=dwm-${VERSION}.tar --transform 's,^,share/man/man1/,' --mode='644' dwm.1
 	tar --append --file=dwm-${VERSION}.tar --transform 's,^,share/licenses/dwm/,' --mode='644' LICENSE
 	tar --append --file=dwm-${VERSION}.tar --transform 's,^,share/xsessions/,' --mode='644' dwm.desktop
-	gzip dwm-${VERSION}.tar
+	gzip -f dwm-${VERSION}.tar
 
 test: all
 	@echo "Ctrl+Shift to lock/unlock"
