@@ -116,6 +116,7 @@ static const Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_Tab,       tagmon,         {.i = -1 } },
 
 	{ MODKEY,                       XK_minus,     spawn,          {.v = screengrab   } },
+	{ MODKEY,                       XK_Print,     spawn,          {.v = screengrab   } },
 	{ MODKEY,                       XK_grave,     spawn,          {.v = dmenu_apps   } },
 	{ MODKEY,                       XK_s,         spawn,          {.v = dmenu_pass   } },
 	{ MODKEY,                       XK_d,         spawn,          {.v = dmenu_window } },
