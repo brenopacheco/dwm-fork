@@ -37,18 +37,18 @@ static const Rule rules[] = {
 	 *	WM_NAME(STRING) = title
 	 */
 	/* class              instance      title  tags mask  isfloating  monitor */
-	{ "gnome-calculator", NULL,         NULL,  0,         1,          -1 },
-	{ "Gpick",            NULL,         NULL,  0,         1,          -1 },
-	{ "Pavucontrol",      NULL,         NULL,  0,         1,          -1 },
-	{ "Blueman-manager",  NULL,         NULL,  0,         1,          -1 },
-	{ "Sxiv",             NULL,         NULL,  0,         0,          -1 },
-	{ "Arandr",           NULL,         NULL,  0,         1,          -1 },
-	{ "st-256color",      "st-floating",NULL,  0,         1,          -1 },
-	{ "File-roller",      NULL,         NULL,  0,         1,          -1 },
-	{ "Slack",            NULL,         NULL,  1 << 1,    0,           1 },
-	{ "thunderbird",      NULL,         NULL,  1 << 3,    0,           1 },
-	{ "thunderbird",      "Mailnews",   NULL,  0,         1,          -1 },
-	{ "thunderbird",      "Msgcompose", NULL,  0,         1,          -1 },
+	{ "gnome-calculator", NULL,            NULL,  0,         1,          -1 },
+	{ "Gpick",            NULL,            NULL,  0,         1,          -1 },
+	{ "Pavucontrol",      NULL,            NULL,  0,         1,          -1 },
+	{ "Blueman-manager",  NULL,            NULL,  0,         1,          -1 },
+	{ "Sxiv",             NULL,            NULL,  0,         0,          -1 },
+	{ "Arandr",           NULL,            NULL,  0,         1,          -1 },
+	{ "st-256color",      "term-floating", NULL,  0,         1,          -1 },
+	{ "File-roller",      NULL,            NULL,  0,         1,          -1 },
+	{ "Slack",            NULL,            NULL,  1 << 1,    0,           1 },
+	{ "thunderbird",      NULL,            NULL,  1 << 3,    0,           1 },
+	{ "thunderbird",      "Mailnews",      NULL,  0,         1,          -1 },
+	{ "thunderbird",      "Msgcompose",    NULL,  0,         1,          -1 },
 };
 
 
@@ -77,10 +77,10 @@ static const char *monocles[] = { "󰼏", "󰼐", "󰼑", "󰼒", "󰼓", "󰼔"
 
 
 /* commands */
-/* static const char *termcmd[]       = { "st",            NULL                               }; */
-/* static const char *termfloatcmd[]  = { "kitty",         "-n", "term-floating", NULL        }; */
-static const char *termcmd[]       = { "kitty",         NULL                               };
-static const char *termfloatcmd[]  = { "kitty",         "--name", "term-floating", NULL    };
+static const char *termcmd[]       = { "st",            NULL                               };
+static const char *termfloatcmd[]  = { "st",         "-n", "term-floating", NULL           };
+/* static const char *termcmd[]       = { "kitty",         NULL                               }; */
+/* static const char *termfloatcmd[]  = { "kitty",         "--name", "term-floating", NULL    }; */
 static const char *dmenu_apps[]    = { "dmenu_apps",    NULL                               };
 static const char *dmenu_pass[]    = { "dmenu_pass",    NULL                               };
 static const char *dmenu_window[]  = { "dmenu_window",  NULL                               };
