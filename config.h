@@ -77,8 +77,10 @@ static const char *monocles[] = { "󰼏", "󰼐", "󰼑", "󰼒", "󰼓", "󰼔"
 
 
 /* commands */
-static const char *termcmd[]       = { "st",            NULL                               };
-static const char *termfloatcmd[]  = { "st",            "-n", "st-floating", NULL          };
+/* static const char *termcmd[]       = { "st",            NULL                               }; */
+/* static const char *termfloatcmd[]  = { "kitty",         "-n", "term-floating", NULL        }; */
+static const char *termcmd[]       = { "kitty",         NULL                               };
+static const char *termfloatcmd[]  = { "kitty",         "--name", "term-floating", NULL    };
 static const char *dmenu_apps[]    = { "dmenu_apps",    NULL                               };
 static const char *dmenu_pass[]    = { "dmenu_pass",    NULL                               };
 static const char *dmenu_window[]  = { "dmenu_window",  NULL                               };
